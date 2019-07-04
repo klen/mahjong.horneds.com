@@ -53,6 +53,9 @@ module.exports = ({ hand, yaku, dora, uraDora, seatWind, prevalentWind, riichi }
 
         basePoints = minipoints * Math.pow(2, 2 + fan)
 
+        if (fan == 4 and minipoints >= 30) or (fan == 3 and minipoints >= 60)
+            basePoints = 2000
+
     doublePoints = round basePoints * 2
     fourPoints = round basePoints * 4
     sixPoints = round basePoints * 6
