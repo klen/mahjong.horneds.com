@@ -42,6 +42,7 @@ YAKU_LIST = [
     require './yaku/itsu'
     require './yaku/yakuhai'
     require './yaku/chanta'
+    require './yaku/tsumo'
 ]
 
 module.exports = (game) ->
@@ -49,6 +50,7 @@ module.exports = (game) ->
 
     yaku_list = []
     exclude = {}
+    hand.tsumo = TSUMO_PERCENT > random(100)
     for yaku in YAKU_LIST
         continue if exclude[yaku.name]
         fan = yaku.test(game)
@@ -68,10 +70,6 @@ module.exports = (game) ->
     tiles = hand.tiles()
     dora = getDoras(tiles, wall[2..5])
     uraDora = getDoras(tiles, wall[9..12])
-    hand.tsumo = TSUMO_PERCENT > random(100)
-
-    if hand.tsumo and not hand.isOpened
-        yaku_list.push name: 'tsumo', fan: 1
 
     game = {
         game...,

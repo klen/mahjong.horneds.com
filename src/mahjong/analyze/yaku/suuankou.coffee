@@ -7,7 +7,7 @@ module.exports =
     yakuman: true
     test: ({ hand }) ->
         return if hand.isOpened
-        return unless hand.wait.set.isPair
+        return unless hand.wait.set.isPair or hand.tsumo
         sets = (set for set in hand.sets when set.isPon)
         return unless sets.length >= 4
         return 13

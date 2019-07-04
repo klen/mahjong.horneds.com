@@ -42,7 +42,7 @@ module.exports = ({ hand, yaku, dora, uraDora, seatWind, prevalentWind, riichi }
             minipoints += 2
 
         # No minipoints
-        unless hand.isOpened and minipoints == 20
+        if hand.isOpened and minipoints == 20
             minipoints += 2
 
         # Round the minipoints
