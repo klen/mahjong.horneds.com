@@ -32,7 +32,7 @@ docker-test:
 .PHONY: build
 build:
 	docker build --pull=true -t mahjong.horneds.com:latest -f $(CURDIR)/devops/Dockerfile $(CURDIR)
-	docker run -i --rm mahjong.horneds.com:latest tests
+	docker run -i --rm mahjong.horneds.com:latest node_modules/.bin/jest
 	docker tag mahjong.horneds.com:latest docker.horneds.com/mahjong.horneds.com:latest
 	docker push docker.horneds.com/mahjong.horneds.com:latest
 	docker system prune -f --filter "until=8h"
