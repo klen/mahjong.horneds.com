@@ -17,7 +17,7 @@ module.exports = createActions 'APP/HISTORY', {
             dora: state.dora
             fan: state.fan
             scores: state.scores.main
-            uraDora: state.uraDora
+            uraDora: state.riichi and state.uraDora
         }
 }
 
