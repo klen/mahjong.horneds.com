@@ -33,13 +33,22 @@ module.exports = ({ hand, yaku, dora, uraDora, seatWind, prevalentWind, riichi }
         # Points for sets (TODO: kongs)
         for set in hand.sets
             continue unless set.isPon
-            point = if set.isOpened then 2 else 4
+            isOpened = set.isOpened or set.id == hand.wait.set.id
+            point = if isOpened then 2 else 4
             point *= 2 if set.isHonor or set.isTerminal
             minipoints += point
 
         # Points for waiting
-        unless hand.wait.id in [hand.wait.set.tiles[0].id, hand.wait.set.tiles[hand.wait.set.tiles.length - 1].id]
+        if hand.wait.set.isPair
             minipoints += 2
+
+        if hand.wait.set.isRow
+            unless hand.wait.id in [hand.wait.set.tiles[0].id, hand.wait.set.tiles[2].id]
+                minipoints += 2
+            else if hand.wait.value == 3 and hand.wait.set.value[1] == '1'
+                minipoints += 2
+            else if hand.wait.value == 7 and hand.wait.set.value[1] == '7'
+                minipoints += 2
 
         # No minipoints
         if hand.isOpened and minipoints == 20
