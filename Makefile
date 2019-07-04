@@ -39,3 +39,4 @@ build:
 	docker tag mahjong.horneds.com:latest docker.horneds.com/mahjong.horneds.com:latest
 	docker push docker.horneds.com/mahjong.horneds.com:latest
 	docker system prune -f --filter "until=8h"
+
