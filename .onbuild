@@ -1,2 +1,2 @@
-make production
+NODE_ENV=production node_modules/.bin/webpack --config src/webpack.config.js
 mv build/* /usr/share/nginx/html
