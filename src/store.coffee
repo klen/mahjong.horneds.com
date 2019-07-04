@@ -10,9 +10,10 @@ store = initStore {
     app: {
         game: require './tags/game/reducer'
         scores: require './tags/scores/reducer'
+        history: require './tags/history/reducer'
     }
 
-}, skipMiddleware, router.middleware, thunkMiddleware
+}, thunkMiddleware, router.middleware, skipMiddleware
 
 Riot.mixin('redux', RRM(store))
 

@@ -1,0 +1,39 @@
+<history>
+    <table if={ state.history.length } class="c-table u-mt4">
+        <thead>
+            <tr class="c-table__head">
+                <th class="c-table__cell">Hand</th>
+                <th class="c-table__cell u-right">Scores</th>
+                <th class="c-table__cell u-right">Fans</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr each={ item, idx in state.history }>
+                <td class="c-table__cell u-size-xs u-upper u-gray">
+                    { item.hand }
+                </td>
+                <td class="c-table__cell u-right">
+                    <span class="{'u-green': item.userScores == item.scores, 'u-red': item.userScores != item.scores}">
+                        { item.userScores }
+                    <span>
+                    <span class="u-gray">/ { item.scores } </span>
+                </td>
+                <td class="c-table__cell u-right">
+                    <span class="{'u-green': item.userFans == item.fan, 'u-red': item.userFans != item.fan}">
+                        { item.userFans }
+                    <span>
+                    <span class="u-gray">/ { item.fan } </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script type="text/coffeescript">
+
+        @mixin 'redux'
+        @actions require './actions'
+        @subscribe require './selector'
+
+    </script>
+
+</history>

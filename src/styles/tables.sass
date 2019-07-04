@@ -1,0 +1,17 @@
+.c-table
+  width: 100%
+  max-width: 100%
+  margin-bottom: 1rem
+
+  &__head
+    color: $gray
+    font-size: $font-size-xs
+    text-transform: uppercase
+
+  &__cell
+    padding: nth($spacers, 3)
+    vertical-align: middle
+    border-top: 1px solid $gray-l
+
+    .c-table__head &
+      border: none
