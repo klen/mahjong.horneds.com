@@ -64,6 +64,13 @@ class TileSet
 
         return @
 
+    @create: (mask) ->
+        tiles = mask.match /.{1,2}/g
+        tiles = (new Tile(t) for t in tiles)
+        ts = new TileSet(tiles...)
+        ts.isValid()
+        return ts
+
 
 class Hand
 
@@ -88,6 +95,11 @@ class Hand
     tiles: ->
         tiles = [(flatten (set.tiles for set in @sets))..., @pair.tiles...]
         return orderBy tiles, 'tile'
+
+    @create: (mask) ->
+        sets = mask.match /.{1,6}/g
+        sets = (TileSet.create(set) for set in sets)
+        return new Hand(sets...)
 
 
 module.exports = { Tile, TileSet, Hand }
