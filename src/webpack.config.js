@@ -38,7 +38,10 @@ module.exports = (env) => {
     plugins: [
 
       // Common
-      new webpack.EnvironmentPlugin(['NODE_ENV', 'VERSION']),
+      new webpack.EnvironmentPlugin(['NODE_ENV']),
+      new webpack.DefinePlugin({
+        VERSION: JSON.stringify(require("../package.json").version)
+      }),
       new HtmlWebpackPlugin({
           alwaysWriteToDisk: true,
           template: "src/index.html"
