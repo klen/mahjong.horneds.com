@@ -5,7 +5,7 @@ node_modules: $(CURDIR)/package.json
 	yarn
 
 version:
-	yarn version --patch
+	yarn version --patch --cwd $(CURDIR)/src
 
 WEBPACK ?=
 .PHONY: production

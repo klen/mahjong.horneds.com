@@ -40,7 +40,7 @@ module.exports = (env) => {
       // Common
       new webpack.EnvironmentPlugin(['NODE_ENV']),
       new webpack.DefinePlugin({
-        VERSION: JSON.stringify(require("../package.json").version)
+        VERSION: JSON.stringify(require("./package.json").version)
       }),
       new HtmlWebpackPlugin({
           alwaysWriteToDisk: true,
