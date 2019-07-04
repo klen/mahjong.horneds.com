@@ -8,7 +8,7 @@
     <div class="u-flex u-flex--center">
         <tile each={ tile in opts.hand.tiles() } if={ tile.id != opts.hand.wait.id } tile={ tile } />
         <div class="u-mla"></div>
-        <tile tile={ opts.hand.wait } />
+        <tile tile={ opts.hand.wait } open={ opts.hand.tsumo }/>
     </div>
 
     <script type="text/coffeescript">
