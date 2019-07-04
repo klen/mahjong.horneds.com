@@ -1,0 +1,44 @@
+<game>
+    <div if={ state.inited }>
+        <div class="u-flex u-mt5">
+            <wind wind={ state.seatWind } seat={ true } title="seat"/>
+            <wind wind={ state.prevalentWind } title="round"/>
+            <div class="u-mla">
+                <wall tiles={ wall1 } />
+            </div>
+        </div>
+        <div class="u-flex u-flex--align-end u-mb4" style="height: 100px">
+            <div if={ state.riichi } class="c-riichi">•</div>
+            <div if={ state.riichi } class="u-mla">
+                <wall tiles={ wall2 } no-title={ true }/>
+            </div>
+        </div>
+
+        <hand hand={ state.hand } number={ state.number }/>
+
+        <scores />
+
+        <button class="c-button c-button--white u-upper" onclick={ actions.reload }> Next hand </button>
+    </div>
+
+    <script type="text/coffeescript">
+        require 'tags/hand'
+        require 'tags/wind'
+        require 'tags/wall'
+        require 'tags/scores'
+
+        require './styles.sass'
+
+        @mixin 'redux'
+        @actions require './actions'
+        @subscribe require './selector'
+
+        @on 'mount', ->
+            @actions.init()
+
+        @on 'update', ->
+            @wall1 = @state.wall[0..6]
+            @wall2 = @state.wall[7..13]
+
+    </script>
+</game>

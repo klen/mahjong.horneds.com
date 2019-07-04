@@ -1,0 +1,13 @@
+<wall>
+    <div class="c-wall">
+        <span if={ !opts.noTitle } class="u-mb3">Dora Indicators</span>
+        <div class="c-wall__tiles">
+            <tile each={ tile in opts.tiles } tile={ tile } />
+        </div>
+    </div>
+
+    <script type="text/coffeescript">
+        require 'tags/tile'
+        require './styles.sass'
+    </script>
+</wall>

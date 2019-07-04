@@ -1,0 +1,12 @@
+<wind>
+    <div class="c-wind {'u-red-l': opts.wind == 'wE' && opts.seat}">
+        <span class="u-mb3">{ opts.title }</span>
+        <img src={ tiles.black[opts.wind] } />
+    </div>
+
+    <script type="text/coffeescript">
+        require './styles.sass'
+
+        @tiles = require 'utils/tiles'
+    </script>
+</wind>

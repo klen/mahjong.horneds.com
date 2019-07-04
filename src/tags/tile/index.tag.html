@@ -1,0 +1,10 @@
+<tile>
+    <div class="c-tile" title={ opts.tile }>
+        <img class="c-tile__img {'c-tile__img--back': opts.tile.isClosed}" src={ opts.tile.isClosed && tiles.back || tiles.white[opts.tile.tile] } />
+    </div>
+    <script type="text/coffeescript">
+        require './styles.sass'
+
+        @tiles = require 'utils/tiles'
+    </script>
+</tile>

@@ -1,0 +1,26 @@
+.c-control
+  -webkit-appearance: none
+  background-color: lighten($gray-l, 10%)
+  border-radius: $border-radius;
+  border: 1px solid $white
+  color: $black
+  display: block
+  font-family: $font-family-base
+  font-size: $font-size
+  padding: .4rem
+  resize: vertical
+select.c-input
+  cursor: pointer
+
+  &::-ms-expand
+    display: none
+
+select.c-control:not([multiple])
+  padding-right: 1.6rem
+  background-image: url("data:image/png;base64,R0lGODlhDwAUAIABAAAAAP///yH5BAEAAAEALAAAAAAPABQAAAIXjI+py+0Po5wH2HsXzmw//lHiSJZmUAAAOw==")
+  background-repeat: no-repeat
+  background-position: 99% 50%
+
+  &:disabled
+    background: $gray-l
+    cursor: not-allowed

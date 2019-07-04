@@ -1,0 +1,106 @@
+@import './variables'
+
+.c-button
+  background: $button-bg-default
+  border-radius: $border-radius
+  border: 1px solid $button-bg-default
+  color: $button-fg-default
+  cursor: pointer
+  font: 600 $font-size $font-family-sans-serif
+  line-height: $line-height-base
+  padding: $button-padding-y $button-padding-x
+  transition: all .5s
+  user-select: none
+
+  display: inline-flex
+  flex-wrap: nowrap
+  align-items: center
+  justify-content: center
+
+  // &:hover:enabled
+    // background: darken($button-bg-default, 10%)
+    // color: $button-fg-default
+
+  &:focus
+    outline: none
+
+  &:disabled
+    background: $button-bg-disabled
+    border: 1px solid $button-bg-disabled
+    color: $button-fg-disabled
+    cursor: not-allowed
+
+  &:active, &--active
+    background: lighten($button-bg-default, 5%)
+    transition: all .2s
+
+  &__sep
+    border-left: 1px solid $gray-l
+    height: 10px
+    margin: 0 6px 0 8px
+    width: 0
+
+  &--close
+    background-color: transparent
+    position: absolute
+    right: 1rem
+    top: 1rem
+    opacity: .5
+    cursor: pointer
+
+@each $name, $color in $colors
+
+  .c-button--#{$name}
+    background: $color
+    border: 1px solid $color
+    color: $white
+
+    &:disabled
+      color: $white
+      background: lighten($color, 20%)
+
+    &:active,&.is-active
+      background: lighten($color, 25%)
+
+    // &:hover:enabled
+      // background: darken($color, 10%)
+
+.c-button--white
+    background: $white
+    color: $black
+    border: 1px solid $gray-l
+
+    &:disabled
+      background: darken($white, 20%)
+      border-color: darken($white, 20%)
+
+    &:active,&.is-active
+      background: darken($white, 25%)
+
+.c-button--link
+    background: none
+    border: none
+    color: $blue-d
+
+    &:active,&.is-active
+      background: none
+      border: 1px solid $blue-d
+
+@media (hover:hover), (hover:on-demand)
+
+  .c-button:hover:enabled
+    background: darken($button-bg-default, 10%)
+    color: $button-fg-default
+
+  @each $name, $color in $colors
+    .c-button--#{$name}:hover:enabled
+      background: darken($color, 10%)
+
+  .c-button--white:hover:enabled
+      border: 1px solid $black
+      background: $white
+      color: $black
+
+  .c-button--link:hover:enabled
+      background: none
+      color: $black
