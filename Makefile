@@ -22,7 +22,7 @@ docker-run: docker
 	docker run -it --rm -p 8000:80 mahjong.horneds.com
 
 .PHONY: build
-build:
+build: production
 	docker build --pull=true -t mahjong.horneds.com:latest -f $(CURDIR)/devops/Dockerfile $(CURDIR)
 	docker tag mahjong.horneds.com:latest docker.horneds.com/mahjong.horneds.com:latest
 	docker push docker.horneds.com/mahjong.horneds.com:latest
