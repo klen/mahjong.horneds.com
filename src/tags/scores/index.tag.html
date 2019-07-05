@@ -44,6 +44,7 @@
                 'c-button--green': state.correctScores && state.userScores <= scores.fans[3][1].value,
                 'c-button--red':  state.userScores && !state.correctScores && state.userScores <= scores.fans[3][1].value,
             }">
+            &#9776;&nbsp;
             <span if={ !state.userScores || state.userScores > scores.fans[3][1].value }>
                 { scores.fans[0][1].name.split(' ')[0] } - { scores.fans[3][1].name.split(' ')[0] }
             </span>
