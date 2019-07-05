@@ -25,6 +25,8 @@ module.exports =
 
         else
             return unless hand.wait.id in [waitSet.tiles[0].id, waitSet.tiles[2].id]
+            return if hand.wait.value == 7 and waitSet.value[1] == '7'
+            return if hand.wait.value == 3 and waitSet.value[1] == '1'
 
         return if hand.pair.suit == 'd'
         return if hand.pair.value in [seatWind, prevalentWind]
