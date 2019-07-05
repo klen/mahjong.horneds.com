@@ -38,15 +38,31 @@
 
     </div>
 
-    <select class="c-control u-mt2" ref="scores" onchange={ onSelectScores }>
-        <option value="">Select Scores</option>
-        <option each={ item in scores } value={ item.value } selected={ state.userScores == item.value }>
+    <div class="u-mt3">
+        <div class="u-gray-l u-size-s u-mb1"> Select Scores</div>
+        <button onclick={ onShowScores } class="c-button u-mr1 u-mb1 {
+                'c-button--green': state.correctScores && state.userScores <= scores.fans[3][1].value,
+                'c-button--red':  state.userScores && !state.correctScores && state.userScores <= scores.fans[3][1].value,
+            }">
+            <span if={ !state.userScores || state.userScores > scores.fans[3][1].value }>
+                { scores.fans[0][1].name.split(' ')[0] } - { scores.fans[3][1].name.split(' ')[0] }
+            </span>
+            <span if={ state.userScores && state.userScores <= scores.fans[3][1].value }>
+                { state.userScores }
+            </span>
+        </button>
+        <button
+            each={ item in scores.limits }
+            onclick={ onSelectScores(item.value) }
+            class="c-button u-mr1 u-mb1 {
+                    'c-button--green': state.correctScores && item.value == state.userScores,
+                    'c-button--red': !state.correctScores && item.value == state.userScores
+                }">
             { item.name }
-        </option>
-    </select>
+        </button>
+    </div>
 
-    <div class="u-mt3 u-upper" style="height: 2rem">
-
+    <div class="u-mv3 u-upper" style="height: 2rem">
         <div if={ state.userScores }>
             <span if={ state.correctScores } class="u-green u-bold"> CORRECT </span>
             <span if={ !state.correctScores } class="u-red u-bold"> WRONG </span>
@@ -62,16 +78,70 @@
                     { state.scores.additional }
                 </span>
                 <span if={ state.seatWind != 'wE' }>
-                    { state.scores.east } / { state.scores.additional }
+                    { state.scores.main } ({ state.scores.east }/{ state.scores.additional })
                 </span>
             </span>
-
         </div>
-
     </div>
 
+    <modal show={ modal } close={ onClose }>
+        <yield to="header">
+            Choose points
+        </yield>
+        <yield to="body">
+            <table class="c-table c-scores u-size-xs">
+                <thead class="c-table__head">
+                    <tr>
+                        <th class="c-table__cell u-right"> Han </th>
+                        <th class="c-table__cell u-right"> 20 fu </th>
+                        <th class="c-table__cell u-right"> 30 fu </th>
+                        <th class="c-table__cell u-right"> 40 fu </th>
+                        <th class="c-table__cell u-right"> 50 fu </th>
+                        <th class="c-table__cell u-right"> 60 fu </th>
+                        <th class="c-table__cell u-right"> 70 fu </th>
+                        <th class="c-table__cell u-right"> 80 fu </th>
+                        <th class="c-table__cell u-right"> 90 fu </th>
+                        <th class="c-table__cell u-right"> 100 fu </th>
+                        <th class="c-table__cell u-right"> 110 fu </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="c-table__cell u-right"> 1 </th>
+                        <td each={ item in parent.scores.fans[0] } onclick={ item && parent.parent.onSelectScores(item.value) } class="u-right { 'c-scores__item': item } { item && item.cls }">
+                            { item && item.name }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="c-table__cell u-right"> 2 </th>
+                        <td each={ item in parent.scores.fans[1] } onclick={ item && parent.parent.onSelectScores(item.value) } class="u-right { 'c-scores__item': item } { item && item.cls }">
+                            { item && item.name }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="c-table__cell u-right"> 3 </th>
+                        <td each={ item in parent.scores.fans[2] } onclick={ item && parent.parent.onSelectScores(item.value) } class="u-right { 'c-scores__item': item } { item && item.cls }">
+                            { item && item.name }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="c-table__cell u-right"> 4 </th>
+                        <td each={ item in parent.scores.fans[3] } onclick={ item && parent.parent.onSelectScores(item.value) } class="u-right { 'c-scores__item': item } { item && item.cls }">
+                            { item && item.name }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </yield>
+    </modal>
+
     <script type="text/coffeescript">
+        require 'tags/common/modal'
+        require './styles.sass'
+
         @config = require './config'
+        @modal = false
+        @scores = @config.scores.other
 
         @mixin 'redux'
         @subscribe require './selector'
@@ -86,7 +156,12 @@
         @onSelectFan = (value) => =>
             @actions.showFans value
 
-        @onSelectScores = => @actions.showScores @refs.scores.value
+        @onSelectScores = (value) => (e) =>
+            @actions.showScores value
+            @tags['modal'].onClose(e)
+
+        @onShowScores = => @update modal: true
+        @onClose = => @update modal: false
 
     </script>
 

@@ -1,0 +1,53 @@
+<modal>
+    <div class="c-overlay c-overlay--visible" onclick={ onClose }></div>
+    <div id={ name } ref="modal" class="c-modal { 'c-modal--out': closing }" tabindex="1" role="dialog">
+        <form class="c-modal__content" role="document" onsubmit={ onSubmit }>
+            <div class="c-modal__body">
+                <yield from="body" />
+            </div>
+        </form>
+    </div>
+
+    <script type="text/coffeescript">
+        require('./styles.sass')
+
+        @closing = false
+        @name = opts.name or "modal-#{Math.ceil(Math.random() * 1e6)}"
+
+        open = =>
+            return if @opts.show? and not @opts.show
+            @refs.modal.focus()
+            document.body.classList.toggle('u-modal-open', true)
+
+        close = =>
+            opts.close?()
+            document.body.classList.toggle('u-modal-open', false)
+
+        @on 'mount', ->
+            @refs.modal.addEventListener 'keydown', @onKeyPress
+
+        @on('update', open)
+        @on('unmount', close)
+
+        @onKeyPress = (e) =>
+            keyCode = e.which or e.keyCode or 0
+            return e unless keyCode == 27
+            return e if @opts.show? and not @opts.show
+            @onClose(e)
+
+        @onSubmit = (e) =>
+            e.preventDefault()
+            @onClose(e) if opts.submit?(@refs)
+
+        @onClose = (e) =>
+            e.preventDefault()
+            e.stopPropagation()
+            @update(closing: true)
+            setTimeout (
+                =>
+                    close()
+                    @update(closing: false)
+            ), 280
+
+    </script>
+</modal>

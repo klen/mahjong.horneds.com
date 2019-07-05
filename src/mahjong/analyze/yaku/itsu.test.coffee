@@ -9,3 +9,9 @@ test 'test itsu', ->
     hand = Hand.create('m7m8m9p1p2p3p4p5p6p7p8p9dWdW')
     expect yaku.test { hand }
         .toEqual 2
+
+    hand = Hand.create('m3m4m5 p1p2p3p4p5p6p7p8p9s7s7')
+    hand.tsumo = true
+    hand.wait = hand.tiles()[7] # p5
+    expect yaku.test { hand }
+        .toEqual 2

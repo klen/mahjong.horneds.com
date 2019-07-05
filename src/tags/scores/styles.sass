@@ -1,0 +1,27 @@
+@import 'styles/variables.sass'
+
+.c-scores
+  margin: 0
+
+  &__item
+    cursor: pointer
+    vertical-align: middle
+    border-top: 1px solid $gray-l
+    padding: .5rem
+    font-weight: bold
+
+    &:hover
+      background: darken(#eeece2, 25%)
+      color: $white
+
+      &.u-bg-blue-l
+        background: $blue !important
+
+      &.u-bg-green-l
+        background: $green !important
+
+      &.u-bg-red-l
+        background: $red !important
+
+      &.u-bg-orange-l
+        background: $orange !important
