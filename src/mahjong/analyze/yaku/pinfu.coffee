@@ -11,6 +11,9 @@ module.exports =
     exclude: ['yakuhai', 'toitoi', 'chitoitsu', 'sanankou', 'sanshoku dokou', 'honroutou', 'sankantsu', 'shou sangen']
     test: ({ hand, seatWind, prevalentWind }) ->
         return if hand.isOpened
+        for set in hand.sets
+            return if set.isPon
+
         waitSet = hand.wait.set
         return if waitSet.isPon
 
@@ -20,13 +23,10 @@ module.exports =
                 continue unless set.isRow
                 connected = connected or hand.wait.tile in [ set.tiles[0].tile, set.tiles[2].tile]
 
-        else unless waitSet.isRow
-            return
+        else
+            return unless hand.wait.id in [waitSet.tiles[0].id, waitSet.tiles[2].id]
 
-        return unless hand.wait.id in [waitSet.tiles[0].id, waitSet.tiles[2].id]
         return if hand.pair.suit == 'd'
         return if hand.pair.value in [seatWind, prevalentWind]
-        for set in hand.sets
-            return if set.isPon
 
         return 1

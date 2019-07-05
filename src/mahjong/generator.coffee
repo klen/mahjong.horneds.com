@@ -11,7 +11,7 @@ orderBy = require 'lodash/orderBy'
 
 TERMINALS_PERCENT = 80
 HONORS_PERCENT = 70
-PONS_PERCENT = 50
+PONS_PERCENT = 30
 
 
 findSet = (tiles, pair=false) ->
