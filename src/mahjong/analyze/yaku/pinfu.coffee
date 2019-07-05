@@ -22,6 +22,7 @@ module.exports =
             for set in hand.sets
                 continue unless set.isRow
                 connected = connected or hand.wait.tile in [ set.tiles[0].tile, set.tiles[2].tile]
+            return unless connected
 
         else
             return unless hand.wait.id in [waitSet.tiles[0].id, waitSet.tiles[2].id]

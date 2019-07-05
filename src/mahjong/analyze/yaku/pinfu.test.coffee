@@ -21,3 +21,8 @@ test 'test pinfu', ->
     hand.wait = hand.tiles()[2] # m3
     expect yaku.test { hand }
         .toBeFalsy()
+
+    hand = Hand.create('m1m2m3 m7m8m9 p3p4p5 s6s7s8 p8p8')
+    hand.wait = hand.tiles()[9] # p8
+    expect yaku.test { hand }
+        .toBeFalsy()
