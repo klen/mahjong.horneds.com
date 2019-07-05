@@ -1,71 +1,71 @@
 <scores>
 
-    <div class="u-mt4 u-flex">
+    <div class="u-mt3">
+        <div class="u-gray-l u-size-s u-mb1"> Select Number of Han</div>
 
-        <div class="u-flex2">
-            <select class="c-control u-mra" ref="fan" onchange={ onSelectFan }>
-                <option value="">Select Number of Han</option>
-                <option each={ item in config.yaku } value={ item.value } selected={ state.userFans && (state.userFans.indexOf(item.value) != -1) }>
-                    { item.name }
-                </option>
-            </select>
-        </div>
+        <button
+            each={ item in config.yaku }
+            onclick={ onSelectFan(item.value) }
+            class="c-button u-mr1 u-mb1 {
+                    'c-button--green': state.correctHan && item.value == state.userFans,
+                    'c-button--red': !state.correctHan && item.value == state.userFans
+                }">
+            { item.name }
+        </button>
 
-        <div if={ state.userFans } class="u-mra u-flex3 u-center u-upper">
-            <span if={ state.userFans.indexOf(state.fan) != -1 } class="u-green u-bold"> CORRECT </span>
-            <span if={ state.userFans.indexOf(state.fan) == -1 } class="u-red u-bold"> WRONG </span>
-        </div>
+    </div>
 
-        <div if={ state.userFans } class="u-flex2 u-right u-flex u-flex--column">
-            <div class="u-upper">
-                <span class="u-mr3"> HAN ({ state.fan }): </span>
-                <span each={ y, idx in state.yaku } class="u-red-l">
-                    <span if={idx}>/</span>
-                    { y.name } <span if={ y.fan > 1 }>({ y.fan })</span>
-                </span>
-                <span if={ state.dora }>
-                    / DORA <span if={ state.dora > 1 }>({ state.dora })</span>
-                </span>
-                <span if={ state.uraDora && state.hand.options.riichi }>
-                    / URADORA <span if={ state.uraDora > 1 }>({ state.uraDora })</span>
-                </span>
-            </div>
+    <div class="u-mt3 u-upper" style="height: 2rem">
+
+        <div class="u-upper" if={ state.userFans }>
+            <span if={ state.correctHan } class="u-green u-bold"> CORRECT </span>
+            <span if={ !state.correctHan } class="u-red u-bold"> WRONG </span>
+
+            <span class="u-mh3">&nbsp;&middot;&nbsp;</span>
+
+            <span class="u-mr2">{ state.fan } HAN:&nbsp;</span>
+            <span each={ y, idx in state.yaku } class="u-red-l">
+                <span if={idx}>/</span>
+                { y.name } <span if={ y.fan > 1 }>({ y.fan })</span>
+            </span>
+            <span if={ state.dora }>
+                / DORA <span if={ state.dora > 1 }>({ state.dora })</span>
+            </span>
+            <span if={ state.uraDora && state.hand.options.riichi }>
+                / URADORA <span if={ state.uraDora > 1 }>({ state.uraDora })</span>
+            </span>
         </div>
 
     </div>
 
-    <div class="u-mv4 u-flex">
+    <select class="c-control u-mt2" ref="scores" onchange={ onSelectScores }>
+        <option value="">Select Scores</option>
+        <option each={ item in scores } value={ item.value } selected={ state.userScores == item.value }>
+            { item.name }
+        </option>
+    </select>
 
-        <div class="u-flex1">
-            <select class="c-control u-mra" ref="scores" onchange={ onSelectScores }>
-                <option value="">Select Scores</option>
-                <option each={ item in scores } value={ item.value } selected={ state.userScores == item.value }>
-                    { item.name }
-                </option>
-            </select>
-        </div>
+    <div class="u-mt3 u-upper" style="height: 2rem">
 
-        <div if={ state.userScores } class="u-mra u-flex2 u-center u-upper">
-            <span if={ state.userScores == state.scores.main } class="u-green u-bold"> CORRECT </span>
-            <span if={ state.userScores != state.scores.main } class="u-red u-bold"> WRONG </span>
-        </div>
+        <div if={ state.userScores }>
+            <span if={ state.correctScores } class="u-green u-bold"> CORRECT </span>
+            <span if={ !state.correctScores } class="u-red u-bold"> WRONG </span>
 
-        <div if={ state.userScores } class="u-flex1 u-right u-flex u-flex--column">
-            <div class="u-upper u-right">
-                SCORES:
-                <span if={ !state.hand.tsumo }>
-                    { state.scores.main }
+            <span class="u-mh3">&nbsp;&middot;&nbsp;</span>
+
+            <span class="u-mr3">SCORES:</span>
+            <span if={ !state.hand.tsumo }>
+                { state.scores.main }
+            </span>
+            <span if={ state.hand.tsumo }>
+                <span if={ state.seatWind == 'wE' }>
+                    { state.scores.additional }
                 </span>
-                <span if={ state.hand.tsumo }>
-                    <span if={ state.seatWind == 'wE' }>
-                        { state.scores.additional }
-                    </span>
-                    <span if={ state.seatWind != 'wE' }>
-                        { state.scores.east } / { state.scores.additional }
-                    </span>
+                <span if={ state.seatWind != 'wE' }>
+                    { state.scores.east } / { state.scores.additional }
                 </span>
-            </div>
-            <span if={ state.minipoints } class="u-gray"> minipoints: { state.minipoints } </span>
+            </span>
+
         </div>
 
     </div>
@@ -83,7 +83,9 @@
             @scores = @config.scores.other
             @scores = @config.scores.east if @state.seatWind == 'wE'
 
-        @onSelectFan = => @actions.showFans @refs.fan.value
+        @onSelectFan = (value) => =>
+            @actions.showFans value
+
         @onSelectScores = => @actions.showScores @refs.scores.value
 
     </script>

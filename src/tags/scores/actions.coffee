@@ -9,8 +9,7 @@ module.exports = createActions 'APP/SCORES', {
 
     'update', 'reset'
 
-    showFans: (value) -> (dispatch) ->
-        userFans = value.split(',').map parseFloat
+    showFans: (userFans) -> (dispatch) ->
         dispatch historyActions.record { userFans }
         return userFans
 
