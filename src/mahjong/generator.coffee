@@ -9,10 +9,9 @@ orderBy = require 'lodash/orderBy'
 
 { TILES, SUITS } = require './resources'
 
-TERMINALS_PERCENT = 80
 HONORS_PERCENT = 70
 PONS_PERCENT = 30
-
+TERMINALS_PERCENT = 80
 
 findSet = (tiles, pair=false) ->
     for t1, idx1 in tiles

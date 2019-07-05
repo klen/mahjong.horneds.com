@@ -7,7 +7,7 @@ module.exports =
     exclude: ['yakuhai', 'iipeikou', 'sanshoku', 'itsu', 'toitoi', 'chitoitsu', 'sanankou', 'sanshoku dokou', 'honroutou', 'sankantsu', 'shou sangen']
     test: ({ hand }) ->
         return if hand.isOpened
-        sets = (set.value for set in hand.sets when set.isRow)
+        sets = (set for set in hand.sets when set.isRow)
         return unless sets.length >= 4
 
         identical = 0
