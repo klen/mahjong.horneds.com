@@ -11,7 +11,7 @@ module.exports =
         for set in hand.sets
             continue unless set.isPon
             continue if set.isOpened
-            continue if hand.wait.set.id == set.id
+            continue if not hand.tsumo and hand.wait.set.id == set.id
             count++
         return unless count == 3
         return 2

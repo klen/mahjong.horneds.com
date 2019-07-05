@@ -1,4 +1,5 @@
 # SUU ANKOU (Four Concealed Pungs)
+# --------------------------------
 # Concealed hand with four concealed pungs/kongs.
 # Winning on a discard is allowed only in case of single wait on the pair.
 #
