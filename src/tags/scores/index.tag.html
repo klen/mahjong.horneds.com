@@ -4,7 +4,7 @@
 
         <div class="u-flex2">
             <select class="c-control u-mra" ref="fan" onchange={ onSelectFan }>
-                <option value="">Select Number of fan</option>
+                <option value="">Select Number of Han</option>
                 <option each={ item in config.yaku } value={ item.value } selected={ state.userFans && (state.userFans.indexOf(item.value) != -1) }>
                     { item.name }
                 </option>
@@ -18,7 +18,7 @@
 
         <div if={ state.userFans } class="u-flex2 u-right u-flex u-flex--column">
             <div class="u-upper">
-                <span class="u-mr3"> FAN ({ state.fan }): </span>
+                <span class="u-mr3"> HAN ({ state.fan }): </span>
                 <span each={ y, idx in state.yaku } class="u-red-l">
                     <span if={idx}>/</span>
                     { y.name } <span if={ y.fan > 1 }>({ y.fan })</span>

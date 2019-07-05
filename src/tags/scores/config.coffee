@@ -1,10 +1,10 @@
 module.exports =
 
     yaku: [
-        { name: '1 fan', value: 1 }
-        { name: '2 fan', value: 2 }
-        { name: '3 fan', value: 3 }
-        { name: '4 fan', value: 4 }
+        { name: '1 han', value: 1 }
+        { name: '2 han', value: 2 }
+        { name: '3 han', value: 3 }
+        { name: '4 han', value: 4 }
         { name: '5 - Mangan', value: 5 }
         { name: '6,7 - Haneman', value: "6,7" }
         { name: '8-10 - Baiman', value: "8,9,10" }
