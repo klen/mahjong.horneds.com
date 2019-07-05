@@ -44,7 +44,7 @@ class TileSet
 
     isValid: ->
         @isPair = @tiles.length == 2
-        @isKong = @tiles.length == 4
+        @isKan = @tiles.length == 4
         unique = uniq(t.value for t in @tiles).length
         isValid = unique in [1, @tiles.length]
         isValid = isValid and @tiles[idx].isConnected @tiles[idx + 1] for idx in [0..@tiles.length - 2]
@@ -91,6 +91,7 @@ class Hand
 
         return unless @pair and @sets.length == 4
         @wait = sample @tiles()
+        @wait = sample @tiles() while @wait.set.isKan
 
     tiles: ->
         tiles = [(flatten (set.tiles for set in @sets))..., @pair.tiles...]

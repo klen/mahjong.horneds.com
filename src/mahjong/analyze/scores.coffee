@@ -68,7 +68,7 @@ module.exports = (game) ->
 
         basePoints = minipoints * Math.pow(2, 2 + fan)
 
-        if (fan == 4 and minipoints >= 30) or (fan == 3 and minipoints >= 60)
+        if (fan == 4 and minipoints > 30) or (fan == 3 and minipoints > 60)
             basePoints = 2000
 
     doublePoints = round basePoints * 2

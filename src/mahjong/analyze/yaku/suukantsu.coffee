@@ -6,6 +6,6 @@ module.exports =
     name: 'suu kan tsu'
     yakuman: true
     test: ({ hand }) ->
-        sets = (set for set in hand.sets when set.isKong)
+        sets = (set for set in hand.sets when set.isKan)
         return unless sets.length >= 4
         return 13

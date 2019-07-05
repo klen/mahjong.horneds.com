@@ -10,8 +10,10 @@ orderBy = require 'lodash/orderBy'
 { TILES, SUITS } = require './resources'
 
 HONORS_PERCENT = 70
-PONS_PERCENT = 30
 TERMINALS_PERCENT = 80
+
+PONS_PERCENT = 30
+KANS_PERCENT = 0
 
 findSet = (tiles, pair=false) ->
     for t1, idx1 in tiles
@@ -26,9 +28,17 @@ findSet = (tiles, pair=false) ->
             continue unless t1.isConnected t2
             continue if t2.isTerminal and random(100) > TERMINALS_PERCENT
             continue if t1.value == t2.value and random(100) > PONS_PERCENT
-            for t3 in tiles[(idx1 + idx2 + 2)...]
+            for t3, idx3 in tiles[(idx1 + idx2 + 2)...]
                 continue if t1.isTerminal and random(100) > TERMINALS_PERCENT
                 set = new TileSet(t1, t2, t3)
+                if set.isValid()
+                    return set unless set.isPon and KANS_PERCENT >= random(100)
+                    for t4 in tiles[(idx1 + idx2 + idx3 + 3)...]
+                        continue unless t4.tile == t1.tile
+                        set.tiles.push(t4)
+                        return set.isValid()
+                    return set
+
                 return set if set.isValid()
 
 generateGameState = ->
