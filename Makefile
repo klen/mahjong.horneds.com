@@ -16,8 +16,8 @@ production: node_modules
 dev: node_modules
 	NODE_ENV=development $(CURDIR)/node_modules/.bin/webpack-dev-server --mode development --open --config=$(CURDIR)/src/webpack.config.js --port=5000
 
-.PHONY: test
-test: node_modules
+.PHONY: test t
+test t: node_modules
 	$(CURDIR)/node_modules/.bin/jest
 
 .PHONY: docker

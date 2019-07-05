@@ -51,7 +51,7 @@ class TileSet
         isValid = isValid and unique == 1 if @isPair
         return unless isValid
 
-        @isPon = unique == 1
+        @isPon = unique == 1 and not @isPair
         @isRow = unique == 3
         @isHonor = @tiles[0].isHonor
         @isTerminal = some @tiles, 'isTerminal'
@@ -97,6 +97,7 @@ class Hand
         return orderBy tiles, 'tile'
 
     @create: (mask) ->
+        mask = mask.replace /\s/g, ''
         sets = mask.match /.{1,6}/g
         sets = (TileSet.create(set) for set in sets)
         return new Hand(sets...)

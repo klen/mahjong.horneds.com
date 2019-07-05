@@ -1,8 +1,6 @@
 orderBy = require 'lodash/orderBy'
 random = require 'lodash/random'
 
-scores = require './scores'
-
 
 TSUMO_PERCENT = 40
 YAKU_LIST = [
@@ -46,8 +44,7 @@ YAKU_LIST = [
 ]
 
 module.exports = (game) ->
-    { wall, hand } = game
-
+    { hand } = game
     yaku_list = []
     exclude = {}
     hand.tsumo = TSUMO_PERCENT > random(100)
@@ -64,31 +61,10 @@ module.exports = (game) ->
         exclude[name] = true for name in yaku.exclude
 
     unless yaku_list.length
-        game.riichi = true
+        hand.options.riichi = true
         yaku_list.push name: 'riichi', fan: 1
 
-    tiles = hand.tiles()
-    dora = getDoras(tiles, wall[2..5])
-    uraDora = getDoras(tiles, wall[9..12])
-
-    game = {
+    return {
         game...,
-        dora, uraDora,
         yaku: orderBy yaku_list, 'fan', ['desc']
     }
-    return { game..., scores(game)... }
-
-
-getDoras = (tiles, indicators) ->
-    doras = {}
-    for t in indicators
-        continue if t.isClosed
-        doras[t.next()] ?= 0
-        doras[t.next()] += 1
-
-    dora = 0
-    for t in tiles
-        continue unless doras[t.tile]
-        dora += doras[t.tile]
-
-    return dora

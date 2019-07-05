@@ -5,7 +5,7 @@
 #
 module.exports =
     name: 'shou sangen'
-    exclude: ['yakuhai', 'pinfu', 'junchan',  'ryanpeikou', 'sanshoku', 'itsu', 'chinitsu', 'chitoitsu', 'sanshoku dokou']
+    exclude: ['tanyao', 'pinfu', 'junchan',  'ryanpeikou', 'sanshoku', 'itsu', 'chinitsu', 'chitoitsu', 'sanshoku dokou']
     test: ({ hand }) ->
         return unless hand.pair.suit == 'd'
         sets = (set for set in hand.sets when set.suit == 'd')

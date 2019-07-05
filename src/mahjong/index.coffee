@@ -1,9 +1,12 @@
 analyze = require './analyze'
 
+scores = require './analyze/scores'
 { generateGameState } = require './generator'
 
 
 module.exports = ->
     game = generateGameState()
-    state = analyze game
-    return { game..., state... }
+    game = analyze game
+    game = scores game
+
+    return game

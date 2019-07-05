@@ -1,10 +1,16 @@
 sumBy = require 'lodash/sumBy'
 
 
-module.exports = ({ hand, yaku, dora, uraDora, seatWind, prevalentWind, riichi }) ->
+module.exports = (game) ->
+    { hand, yaku, wall, seatWind, prevalentWind } = game
+
+    tiles = hand.tiles()
+    dora = getDoras(tiles, wall[2..5])
+    uraDora = getDoras(tiles, wall[9..12])
+
     fan = sumBy yaku, 'fan'
     fan += dora
-    fan += uraDora if riichi
+    fan += uraDora if hand.options.riichi
 
     fan = Math.min(13, fan)
     fan = Math.min(12, fan) unless hand.options.yakuman
@@ -77,7 +83,22 @@ module.exports = ({ hand, yaku, dora, uraDora, seatWind, prevalentWind, riichi }
         scores.east = doublePoints
         scores.additional = basePoints
 
-    return { fan, minipoints, scores }
+    return { game..., dora, uraDora, fan, minipoints, scores }
 
 
 round = (d) -> Math.ceil(d / 100.0) * 100
+
+
+getDoras = (tiles, indicators) ->
+    doras = {}
+    for t in indicators
+        continue if t.isClosed
+        doras[t.next()] ?= 0
+        doras[t.next()] += 1
+
+    dora = 0
+    for t in tiles
+        continue unless doras[t.tile]
+        dora += doras[t.tile]
+
+    return dora
