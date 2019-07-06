@@ -8,7 +8,7 @@ module.exports = createActions 'APP/HISTORY', {
     record: (payload) -> (dispatch, getState) ->
         state = selector getState()
         isRiichi = state.hand.options.riichi
-        hand = "##{state.history.length + 1} "
+        hand = "##{ state.number } "
         hand += (y.name for y in state.yaku).join(', ')
         hand += ", dora-#{state.dora}" if state.dora
         hand += ", uradora-#{state.uraDora}" if state.uraDora and isRiichi

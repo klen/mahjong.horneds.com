@@ -1,8 +1,5 @@
 # CHUUREN POOTO (Nine Gates)
 # --------------------------
-# Concealed hand consisting of the tiles 1112345678999 in the same suit plus
-# any one extra tile in the same suit
-#
 FORM = [1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9]
 module.exports =
     name: 'chuuren pooto'
@@ -19,3 +16,7 @@ module.exports =
 
         return unless form.length == 0
         return 13
+    desc: """
+        Concealed hand consisting of the tiles 1112345678999 in the same suit
+        plus any one extra tile in the same suit
+    """

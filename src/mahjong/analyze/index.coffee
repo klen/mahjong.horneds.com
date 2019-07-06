@@ -52,7 +52,7 @@ module.exports = (game) ->
         continue if exclude[yaku.name]
         fan = yaku.test(game)
         continue unless fan
-        yaku_list.push { fan, name: yaku.name }
+        yaku_list.push { fan, name: yaku.name, desc: yaku.desc }
         hand.options[yaku.name] = true
         if yaku.yakuman
             hand.options.yakuman = true
@@ -62,7 +62,7 @@ module.exports = (game) ->
 
     unless yaku_list.length
         hand.options.riichi = true
-        yaku_list.push name: 'riichi', fan: 1
+        yaku_list.push name: 'riichi', fan: 1, desc: "Concealed waiting hand declared at 1,000 points stake."
 
     return {
         game...,

@@ -1,14 +1,14 @@
 # PINFU
 # -----
-# Concealed all chows hand with a valueless pair. I.e. a concealed hand with four
-# chows and a pair that is neither dragons, nor seat wind, nor prevalent wind.
-# The winning tile is required to finish a chow with a two-sided wait. The hand
-# is by definition worth no minipoints, only the base 30 on a discard or 20 on
-# self-draw.
 #
 module.exports =
     name: 'pinfu'
     exclude: ['yakuhai', 'toitoi', 'chitoitsu', 'sanankou', 'sanshoku dokou', 'honroutou', 'sankantsu', 'shou sangen']
+    desc: """
+        Concealed all chows hand with a valueless pair. I.e. a concealed hand
+        with four chows and a pair that is neither dragons, nor seat wind, nor
+        prevalent wind. The winning tile is required to finish a chow with a
+        two-sided wait."""
     test: ({ hand, seatWind, prevalentWind }) ->
         return if hand.isOpened
         for set in hand.sets

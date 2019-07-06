@@ -1,10 +1,8 @@
 # TANYAO (All Simples)
-# --------------------
-# Hand with no terminals and honours
-#
 module.exports =
     name: 'tanyao'
     exclude: ['yakuhai', 'chanta', 'junchan', 'itsu', 'honitsu', 'honroutou', 'shou sangen']
+    desc: "Hand with no terminals and honours"
     test: ({ hand }) ->
         for set in hand.sets
             return if set.isHonor or set.isTerminal

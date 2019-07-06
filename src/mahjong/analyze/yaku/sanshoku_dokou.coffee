@@ -1,9 +1,7 @@
 # SAN SHOKU DOKOU (Triple Pung)
-# -----------------------------
-# Hand with three pungs/kongs, one in each suit, of the same number
-#
 module.exports =
     name: 'sanshoku dokou'
+    desc: "Hand with three pungs/kongs, one in each suit, of the same number"
     test: ({ hand }) ->
         suits = {s: [], m: [], p: []}
         for set in hand.sets

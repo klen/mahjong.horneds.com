@@ -1,11 +1,10 @@
 # HONITSU (Half Flush)
-# --------------------
-# Hand with tiles from only one of the three suits, in combination with
-# honours. Gives an extra fan if concealed.
-#
 module.exports =
     name: 'honitsu'
     exclude: ['tanyao', 'junchan', 'sanshoku', 'chinitsu', 'sanshoku dokou']
+    desc: """
+        Hand with tiles from only one of the three suits, in combination with
+        honours. Gives an extra fan if concealed. """
     test: ({ hand }) ->
         isHonor = hand.pair.isHonor
         suits = if isHonor then [] else [hand.pair.suit]

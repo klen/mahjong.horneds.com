@@ -1,9 +1,8 @@
 # TSUU IISOU (All Honours)
-# Hand composed entirely of honour tiles.
-#
 module.exports =
     name: 'tsuu iisou'
     yakuman: true
+    desc: "Hand composed entirely of honour tiles."
     test: ({ hand }) ->
         for tile in hand.tiles()
             return unless tile.isHonor

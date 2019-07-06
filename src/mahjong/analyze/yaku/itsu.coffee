@@ -1,10 +1,8 @@
 # Itsu (Pure Straight)
-# --------------------
-# Hand with three consecutive chows in the same suit
-#
 module.exports =
     name: 'itsu'
     exclude: ['tanyao', 'chanta', 'junchan', 'ryanpeikou', 'sanshoku', 'toitoi', 'chitoitsu', 'sanankou', 'sanshoku doku', 'honroutou', 'sankantsu', 'shou sangen']
+    desc: "Hand with three consecutive chows in the same suit."
     test: ({ hand }) ->
         suits = {s: [], m: [], p: []}
         for set in hand.sets

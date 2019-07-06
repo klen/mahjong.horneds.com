@@ -1,10 +1,8 @@
 # YAKUHAI
-# -------
-# Pung/kong of dragons/seat wind/prevalent wind.
-#
 module.exports =
     name: 'yakuhai'
     exclude: ['pinfu', 'junchan', 'ryanpeikou', 'chinitsu', 'chitoitsu']
+    desc: "Pung/kong of dragons, seat/prevalent wind."
     test: ({ hand, seatWind, prevalentWind }) ->
         fan = 0
         for set in hand.sets

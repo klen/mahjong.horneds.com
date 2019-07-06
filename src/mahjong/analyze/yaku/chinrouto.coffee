@@ -1,7 +1,5 @@
 # CHINROUTO (All Terminals)
 # -------------------------
-# Hand composed entirely of terminal tiles.
-#
 module.exports =
     name: 'chinrouto'
     yakuman: true
@@ -10,3 +8,4 @@ module.exports =
             return unless tile.isTerminal
 
         return 13
+    desc: "Hand composed entirely of terminal tiles."

@@ -24,9 +24,10 @@
             <span class="u-mh3">&nbsp;&middot;&nbsp;</span>
 
             <span class="u-mr2">{ state.fan } HAN:&nbsp;</span>
-            <span each={ y, idx in state.yaku } class="u-red-l">
+            <span each={ y, idx in state.yaku } title={ y.desc }>
                 <span if={idx}>/</span>
-                { y.name } <span if={ y.fan > 1 }>({ y.fan })</span>
+                <span class="c-yaku">{ y.name }</span>
+                <span if={ y.fan > 1 }>({ y.fan })</span>
             </span>
             <span if={ state.dora }>
                 / DORA <span if={ state.dora > 1 }>({ state.dora })</span>
