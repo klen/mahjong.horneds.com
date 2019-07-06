@@ -25,14 +25,14 @@ module.exports = createReducer DEFAULT, initialReducer(actions.TYPES), commonRed
         return state unless state.current
 
         { scores, userScores, fan, userFans } = state.current
-        scores = 0
-        scores = 4 - (Math.abs(scores - userScores) / 1000) if userScores
+        score = 0
+        score = 4 - (Math.abs(scores - userScores) / 1000) if userScores
         han = 0
         han = 2 - Math.abs(fan - userFans) if userFans
         return {
             current: null
             hanPoints: if han > 0 then state.hanPoints + han else state.hanPoints
-            scorePoints: if scores > 0 then state.scorePoints + scores else state.scorePoints
+            scorePoints: if score > 0 then state.scorePoints + score else state.scorePoints
             history: [ state.current, state.history... ]
         }
 
