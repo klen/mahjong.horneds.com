@@ -27,6 +27,7 @@
   "dependencies": {
     "include-media": "^1.4.9",
     "lodash": "^4.17.11",
+    "microtip": "^0.2.2",
     "redux": "^4.0.1",
     "redux-code": "^0.1.6",
     "redux-riot": "^0.0.8",

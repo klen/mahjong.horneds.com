@@ -24,9 +24,9 @@
             <span class="u-mh3">&nbsp;&middot;&nbsp;</span>
 
             <span class="u-mr2">{ state.fan } HAN:&nbsp;</span>
-            <span each={ y, idx in state.yaku } title={ y.desc }>
+            <span each={ y, idx in state.yaku }>
                 <span if={idx}>/</span>
-                <span class="c-yaku">{ y.name }</span>
+                <span class="c-yaku" aria-label={ y.desc } data-microtip-position="top" role="tooltip">{ y.name }</span>
                 <span if={ y.fan > 1 }>({ y.fan })</span>
             </span>
             <span if={ state.dora }>

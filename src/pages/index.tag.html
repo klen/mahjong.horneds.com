@@ -3,6 +3,10 @@
         <h1 class="c-header u-size-xxl u-m3">RIICHI SCORES TRAINER</h1>
         <div class="u-p3">
             <game class="u-w100"/>
+
+            <button class="c-button c-button--white u-upper u-mt2" onclick={ onNext }> Next hand </button>
+
+            <history />
         </div>
         <div class="u-mta u-mb3 u-center u-gray u-size-s">
             <span>© 2019</span>
@@ -16,7 +20,11 @@
 
     <script type="text/coffeescript">
         require 'tags/game'
+        require 'tags/history'
 
         @VERSION = VERSION
+
+        @onNext = (e) => @tags.game.actions.reload()
+
     </script>
 </app>

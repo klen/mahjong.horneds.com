@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="u-flex u-flex--align-end u-mb4" style="height: 100px">
-            <div if={ state.hand.options.riichi } class="c-riichi">•</div>
+            <div if={ state.hand.options.riichi } class="c-riichi" aria-label="The Player has declared Riichi" role="tooltip" data-microtip-position="top">•</div>
             <div if={ state.hand.options.riichi } class="u-mla">
                 <wall tiles={ wall2 } no-title={ true }/>
             </div>
@@ -18,10 +18,6 @@
 
         <scores />
 
-        <button class="c-button c-button--white u-upper u-mt2" onclick={ actions.reload }> Next hand </button>
-
-        <history />
-
     </div>
 
     <script type="text/coffeescript">
@@ -29,7 +25,6 @@
         require 'tags/wind'
         require 'tags/wall'
         require 'tags/scores'
-        require 'tags/history'
 
         require './styles.sass'
 
