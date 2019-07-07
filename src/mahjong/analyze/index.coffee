@@ -3,6 +3,7 @@ random = require 'lodash/random'
 
 
 TSUMO_PERCENT = 40
+RIICHI_PERCENT = 20
 YAKU_LIST = [
 
     # Yakuman
@@ -60,9 +61,10 @@ module.exports = (game) ->
         continue unless yaku.exclude
         exclude[name] = true for name in yaku.exclude
 
-    unless yaku_list.length
-        hand.options.riichi = true
-        yaku_list.push name: 'riichi', fan: 1, desc: "Concealed waiting hand declared at 1,000 points stake."
+    unless hand.isOpened
+        if not yaku_list.length or RIICHI_PERCENT >= random(100)
+            hand.options.riichi = true
+            yaku_list.push name: 'riichi', fan: 1, desc: "Concealed waiting hand declared at 1,000 points stake."
 
     return {
         game...,
