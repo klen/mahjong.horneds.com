@@ -23,3 +23,8 @@ test 'test itsu', ->
     hand = Hand.create('s4s5s6 s5s6s7 s7s8s9 s1s2s3 s7s7')
     expect yaku.test { hand }
         .toEqual 2
+
+    hand = Hand.create('p4p5p6p7p8p9p7p8p9s7s8s9s3s3')
+    expect yaku.test { hand }
+        .toBeFalsy()
+

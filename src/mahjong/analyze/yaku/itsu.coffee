@@ -1,3 +1,5 @@
+uniq = require 'lodash/uniq'
+
 # Itsu (Pure Straight)
 module.exports =
     name: 'itsu'
@@ -11,4 +13,5 @@ module.exports =
 
         for _, value of suits
             continue unless value.length >= 3
+            continue unless uniq(value).length >= 3
             return hand.isOpened and 1 or 2
