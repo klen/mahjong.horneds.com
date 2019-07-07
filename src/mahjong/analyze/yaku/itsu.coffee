@@ -7,8 +7,8 @@ module.exports =
         suits = {s: [], m: [], p: []}
         for set in hand.sets
             continue unless set.isRow
-            suits[set.suit].push set.value[1]
+            suits[set.suit].push set.value[1] if set.value[1] in ['1', '4', '7']
 
         for _, value of suits
-            continue unless value.join('') == '147'
+            continue unless value.length >= 3
             return hand.isOpened and 1 or 2

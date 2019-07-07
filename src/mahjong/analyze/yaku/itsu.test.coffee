@@ -15,3 +15,11 @@ test 'test itsu', ->
     hand.wait = hand.tiles()[7] # p5
     expect yaku.test { hand }
         .toEqual 2
+
+    hand = Hand.create('s1s2s3 s4s5s6 s5s6s7 s7s8s9 s7s7')
+    expect yaku.test { hand }
+        .toEqual 2
+
+    hand = Hand.create('s4s5s6 s5s6s7 s7s8s9 s1s2s3 s7s7')
+    expect yaku.test { hand }
+        .toEqual 2
