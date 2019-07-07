@@ -14,7 +14,7 @@ test 'test pinfu', ->
 
     # Penchan
     hand = Hand.create('m1m2m3 m7m8m9 p7p8p9 s2s3s4 m5m5')
-    hand.wait = hand.tiles()[8] # p7
+    hand.wait = hand.tiles()[9] # p8
     expect yaku.test { hand }
         .toBeFalsy()
 
