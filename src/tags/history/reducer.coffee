@@ -26,7 +26,7 @@ module.exports = createReducer DEFAULT, initialReducer(actions.TYPES), commonRed
 
         { scores, userScores, fan, userFans } = state.current
         score = 0
-        score = 4 - (Math.abs(scores - userScores) / 1000) if userScores
+        score = 4 - Math.ceil(Math.abs(scores - userScores) / 1000) if userScores
         han = 0
         han = 2 - Math.abs(fan - userFans) if userFans
         return {
