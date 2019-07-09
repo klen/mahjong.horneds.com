@@ -1,15 +1,19 @@
 module.exports =
 
     yaku: [
-        { name: '1 han', value: [1] }
-        { name: '2 han', value: [2] }
-        { name: '3 han', value: [3] }
-        { name: '4 han', value: [4] }
-        { name: '5 - Mangan', value: [5] }
-        { name: '6,7 - Haneman', value: [6,7] }
-        { name: '8-10 - Baiman', value: [8,9,10] }
-        { name: '11,12 - Sanbaiman', value: [11, 12] }
-        { name: '13+ - Yakuman', value: 13 }
+        { name: '1 han',   value: 1 }
+        { name: '2 han',   value: 2 }
+        { name: '3 han',   value: 3 }
+        { name: '4 han',   value: 4 }
+        { name: '5 han',   value: 5 }
+        { name: '6 han',   value: 6 }
+        { name: '7 han',   value: 7 }
+        { name: '8 han',   value: 8 }
+        { name: '9 han',   value: 9 }
+        { name: '10 han',  value: 10 }
+        { name: '11 han',  value: 11 }
+        { name: '12 han',  value: 12 }
+        { name: '13+ han', value: 13 }
     ]
 
     scores:

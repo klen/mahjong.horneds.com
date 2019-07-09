@@ -25,7 +25,7 @@
                     <span class="u-gray">/ { item.scores } </span>
                 </td>
                 <td class="c-table__cell u-right">
-                    <span if={ item.userFans } class="{'u-green': item.userFans.indexOf(item.fan) != -1, 'u-red': item.userFans.indexOf(item.fan) == -1}">
+                    <span if={ item.userFans } class="{'u-green': item.userFans == item.fan, 'u-red': item.userFans != item.fan}">
                         { item.userFans }
                     <span>
                     <span class="u-gray">/ { item.fan } </span>
