@@ -10,10 +10,10 @@ module.exports =
 
         identical = 0
         for a in sets
-            count = 0
             for b in sets
                 continue if a.id == b.id
                 identical++ if a.value == b.value
-
+        
+        return if identical == 6
         return if identical < 4
         return 3
