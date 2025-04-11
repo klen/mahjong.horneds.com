@@ -20,3 +20,13 @@ body
 
 .u-bold
   font-weight: 600 !important
+
+.mj-header
+  @include media('<tablet')
+    display: grid !important
+    grid-template-columns: 1fr 1fr
+    gap: 1rem
+
+.mj-dora-list
+  @include media('<tablet')
+    grid-column: 1 / -1
