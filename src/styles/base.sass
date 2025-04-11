@@ -34,3 +34,8 @@ body
 .mj-hand
   justify-content: space-between
   flex-wrap: wrap
+
+[aria-label][role~=tooltip]::after
+  @include media('<tablet')
+    white-space: normal
+    text-align: center
