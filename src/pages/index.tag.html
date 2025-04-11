@@ -25,7 +25,9 @@
 
         @VERSION = VERSION
 
-        @onNext = (e) => @tags.game.actions.reload()
+        @onNext = (e) ->
+            @tags.game.actions.reload()
+            window.scrollTo(0, 0)
 
     </script>
 </app>
