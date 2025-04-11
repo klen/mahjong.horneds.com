@@ -5,13 +5,13 @@
             <wind wind={ state.prevalentWind } title="round"/>
             <div class="u-mla mj-dora-list">
                 <wall tiles={ wall1 } />
-            </div>
-        </div>
-        <div class="u-flex u-flex--align-end u-mb4" style="height: 100px">
-            <div if={ state.hand.options.riichi } class="c-riichi" aria-label="The Player has declared Riichi" role="tooltip" data-microtip-position="top">•</div>
             <div if={ state.hand.options.riichi } class="u-mla">
                 <wall tiles={ wall2 } no-title={ true }/>
             </div>
+            </div>
+        </div>
+        <div class="u-mt4 u-mb4">
+            <div if={ state.hand.options.riichi } class="c-riichi" aria-label="The Player has declared Riichi" role="tooltip" data-microtip-position="top">•</div>
         </div>
 
         <hand hand={ state.hand } number={ state.number }/>

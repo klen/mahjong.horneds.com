@@ -1,14 +1,19 @@
 <hand>
-    <div class="u-flex u-mb2">
-        <span class="u-bold"> HAND #{ opts.number } </span>
-        <span class="u-mla u-center" style="width: 70px">
-            { opts.hand.tsumo && 'TSUMO' || 'RON' }
-        </span>
-    </div>
-    <div class="u-flex u-flex--center">
-        <tile each={ tile in opts.hand.tiles() } if={ tile.id != opts.hand.wait.id } tile={ tile } />
-        <div class="u-mla"></div>
-        <tile tile={ opts.hand.wait } open={ !opts.hand.tsumo }/>
+    <div class="u-flex mj-hand">
+        <div>
+            <div class="u-flex u-mb2">
+                <span class="u-bold"> HAND #{ opts.number } </span>
+            </div>
+            <div class="u-flex u-flex--wrap">
+                <tile each={ tile in opts.hand.tiles() } if={ tile.id != opts.hand.wait.id } tile={ tile } />
+            </div>
+        </div>
+        <div>
+            <span class="u-mla u-center" style="width: 70px">
+                { opts.hand.tsumo && 'TSUMO' || 'RON' }
+            </span>
+            <tile tile={ opts.hand.wait } open={ !opts.hand.tsumo }/>
+        </div>
     </div>
 
     <script type="text/coffeescript">
