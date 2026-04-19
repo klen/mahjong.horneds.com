@@ -2,7 +2,7 @@
     <div class="c-wall">
         <span if={ !opts.noTitle } class="u-mb3">Dora Indicators</span>
         <div class="c-wall__tiles">
-            <tile each={ tile in opts.tiles } tile={ tile } label="Dora is { descTiles[tile.next()] }" />
+            <tile each={ tile in opts.tiles } tile={ tile } label="{ opts.noTitle && 'Ura-dora' || 'Dora' } is { descTiles[tile.next()] }" />
         </div>
     </div>
 
