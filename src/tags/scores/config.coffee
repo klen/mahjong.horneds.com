@@ -12,8 +12,8 @@ module.exports =
         { name: '9 han',   value: 9 }
         { name: '10 han',  value: 10 }
         { name: '11 han',  value: 11 }
-        { name: '12 han',  value: 12 }
-        { name: '13+ han', value: 13 }
+        { name: '12+ han', value: 12 }
+        { name: 'Yakuman', value: 13 }
     ]
 
     scores:
