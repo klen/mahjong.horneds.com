@@ -15,6 +15,9 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,6 +29,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: yarn
+          cache-dependency-path: yarn.lock
 
       - name: Install dependencies
         run: make node_modules

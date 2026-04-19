@@ -1,8 +1,6 @@
-*lock*
 .DS_Store
 /.vimrc
 /build
 /node_modules
 /todo.txt
-yarn*
-
+/package-lock.json
