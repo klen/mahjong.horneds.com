@@ -15,7 +15,7 @@
 
     </div>
 
-    <div class="u-mt3 u-upper" style="height: 2rem">
+    <div class="u-mt3 u-upper" style="min-height: 2rem">
 
         <div class="u-upper" if={ state.userFans }>
             <span if={ state.correctHan } class="u-green u-bold"> CORRECT </span>
@@ -64,7 +64,7 @@
         </button>
     </div>
 
-    <div class="u-mv3 u-upper" style="height: 2rem">
+    <div class="u-mv3 u-upper" style="min-height: 2rem">
         <div if={ state.userScores }>
             <span if={ state.correctScores } class="u-green u-bold"> CORRECT </span>
             <span if={ !state.correctScores } class="u-red u-bold"> WRONG </span>
@@ -84,15 +84,14 @@
                 </span>
             </span>
 
-            <span if={ state.minipoints && state.fuDetails && state.fuDetails.length }>
-                <span class="u-mh3">&nbsp;&middot;&nbsp;</span>
+            <div if={ state.minipoints && state.fuDetails && state.fuDetails.length } class="u-mt1">
                 <span class="u-mr2">{ state.minipoints } FU:</span>
                 <span each={ fu, idx in state.fuDetails }>
                     <span if={ idx }> + </span>
                     <span>{ fu.label }</span>
                     <span if={ fu.value > 1 }>({ fu.value })</span>
                 </span>
-            </span>
+            </div>
         </div>
     </div>
 
