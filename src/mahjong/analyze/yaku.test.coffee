@@ -28,3 +28,20 @@ test 'test shou_sangen', ->
 
     expect hand.options['itsu']
         .toBeTruthy()
+
+
+test 'selects highest-fan decomposition for ambiguous hands', ->
+    hand = Hand.create('s1s2s3s1s2s3s1s2s3s4s5s6s1s1')
+    hand.wait = hand.tiles().find (tile) -> tile.tile == 's1'
+
+    { yaku } = analyze { hand }
+    names = (item.name for item in yaku)
+
+    expect names.includes('sanankou')
+        .toBeTruthy()
+
+    expect names.includes('iipeikou')
+        .toBeFalsy()
+
+    expect hand.options['sanankou']
+        .toBeTruthy()
