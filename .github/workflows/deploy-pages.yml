@@ -25,13 +25,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 14
+          node-version: 18
 
       - name: Install dependencies
         run: make node_modules
 
       - name: Build static site
-        run: make production
+        run: NODE_OPTIONS=--openssl-legacy-provider make production
 
       - name: Disable Jekyll
         run: touch build/.nojekyll
