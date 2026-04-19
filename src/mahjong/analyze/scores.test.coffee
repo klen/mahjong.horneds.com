@@ -24,3 +24,5 @@ test 'counts fu for concealed honor kan', ->
 
     result = scores(game)
     expect(result.minipoints).toEqual(60)
+    expect(result.fuDetails.length > 0).toBeTruthy()
+    expect(result.fuDetails.find((item) -> item.label == 'closed kan (honor)' and item.value == 32)).toBeTruthy()

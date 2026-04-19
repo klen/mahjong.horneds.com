@@ -37,6 +37,15 @@
             </span>
         </div>
 
+        <div class="u-mt1" if={ state.userFans && state.minipoints && state.fuDetails && state.fuDetails.length }>
+            <span class="u-mr2">{ state.minipoints } FU:</span>
+            <span each={ fu, idx in state.fuDetails }>
+                <span if={ idx }> + </span>
+                <span class="c-yaku" aria-label={ fu.label } data-microtip-position="top" role="tooltip">{ fu.label }</span>
+                <span if={ fu.value > 1 }>({ fu.value })</span>
+            </span>
+        </div>
+
     </div>
 
     <div class="u-mt3 u-size-s">

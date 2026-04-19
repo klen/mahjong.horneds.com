@@ -24,17 +24,24 @@ module.exports = (game) ->
         else 0
 
     minipoints = 0
+    fuDetails = []
     unless basePoints
-        minipoints = 20
-        unless hand.tsumo or hand.isOpened
+        if hand.tsumo or hand.isOpened
+            minipoints = 20
+            fuDetails.push value: 20, label: 'base'
+        else
             minipoints = 30
+            fuDetails.push value: 30, label: 'base (closed ron)'
 
         # minipoints for pair
         if hand.pair.suit == 'd' or hand.pair.value in [seatWind, prevalentWind]
             minipoints += 2
+            fuDetails.push value: 2, label: 'value pair'
 
         # +2 for Tsumo
-        minipoints += 2 if hand.tsumo
+        if hand.tsumo
+            minipoints += 2
+            fuDetails.push value: 2, label: 'tsumo'
 
         # Points for sets
         for set in hand.sets
@@ -47,28 +54,44 @@ module.exports = (game) ->
                 else 4
             point *= 2 if set.isHonor or set.isTerminal
             minipoints += point
+            kind = if set.isKan then 'kan' else 'pon'
+            state = if isOpened then 'open' else 'closed'
+            value = if set.isHonor then 'honor' else set.value
+            fuDetails.push value: point, label: "#{state} #{kind} (#{value})"
 
         # Points for waiting
         if hand.wait.set.isPair
             minipoints += 2
+            fuDetails.push value: 2, label: 'tanki wait'
 
         if hand.wait.set.isRow
             unless hand.wait.id in [hand.wait.set.tiles[0].id, hand.wait.set.tiles[2].id]
                 minipoints += 2
+                fuDetails.push value: 2, label: 'kanchan wait'
             else if hand.wait.value == 3 and hand.wait.set.value[1] == '1'
                 minipoints += 2
+                fuDetails.push value: 2, label: 'penchan wait'
             else if hand.wait.value == 7 and hand.wait.set.value[1] == '7'
                 minipoints += 2
+                fuDetails.push value: 2, label: 'penchan wait'
 
         # No minipoints
         if hand.isOpened and minipoints == 20
             minipoints += 2
+            fuDetails.push value: 2, label: 'open hand bonus'
 
         # Round the minipoints
-        minipoints = Math.ceil(minipoints / 10) * 10
+        rounded = Math.ceil(minipoints / 10) * 10
+        if rounded > minipoints
+            fuDetails.push value: rounded - minipoints, label: 'round up'
+        minipoints = rounded
 
         if hand.options.pinfu
             minipoints = if hand.tsumo then 20 else 30
+            fuDetails = [
+                value: minipoints
+                label: if hand.tsumo then 'pinfu tsumo fixed fu' else 'pinfu ron fixed fu'
+            ]
 
         basePoints = minipoints * Math.pow(2, 2 + fan)
 
@@ -87,7 +110,7 @@ module.exports = (game) ->
         scores.east = doublePoints
         scores.additional = basePoints
 
-    return { game..., dora, uraDora, fan, minipoints, scores }
+    return { game..., dora, uraDora, fan, minipoints, fuDetails, scores }
 
 
 round = (d) -> Math.ceil(d / 100.0) * 100
