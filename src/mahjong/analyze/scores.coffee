@@ -36,11 +36,15 @@ module.exports = (game) ->
         # +2 for Tsumo
         minipoints += 2 if hand.tsumo
 
-        # Points for sets (TODO: kongs)
+        # Points for sets
         for set in hand.sets
             continue unless set.isPon
             isOpened = set.isOpened or (not hand.tsumo and set.id == hand.wait.set.id)
-            point = if isOpened then 2 else 4
+            point = switch
+                when set.isKan and isOpened then 8
+                when set.isKan then 16
+                when isOpened then 2
+                else 4
             point *= 2 if set.isHonor or set.isTerminal
             minipoints += point
 

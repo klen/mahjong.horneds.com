@@ -45,10 +45,6 @@ generateGameState = ->
     tiles = (new Tile(t) for t in shuffle TILES)
     wall = tiles.splice(0, 14)
     tile.isClosed = true for tile in wall
-    indicator = 0
-    while not indicator or (random(100) > 75 and indicator < 4)
-        wall[2 + indicator].isClosed = wall[9 + indicator].isClosed = false
-        indicator += 1
 
     hand = new Hand()
     while hand.sets.length < 4
@@ -56,6 +52,11 @@ generateGameState = ->
         tiles.splice(tiles.indexOf(tile), 1) for tile in set.tiles
         hand.push set
     hand.push findSet tiles, true
+
+    indicators = 1 + (set for set in hand.sets when set.isKan).length
+    indicators += 1 while random(100) > 75 and indicators < 5
+    for idx in [0...indicators]
+        wall[2 + idx].isClosed = wall[9 + idx].isClosed = false
 
     return {
         wall, hand
