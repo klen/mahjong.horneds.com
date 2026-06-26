@@ -20,3 +20,22 @@ body
 
 .u-bold
   font-weight: 600 !important
+
+.mj-header
+  @include media('<tablet')
+    display: grid !important
+    grid-template-columns: 1fr 1fr
+    gap: 1rem
+
+.mj-dora-list
+  @include media('<tablet')
+    grid-column: 1 / -1
+
+.mj-hand
+  justify-content: space-between
+  flex-wrap: wrap
+
+[aria-label][role~=tooltip]::after
+  @include media('<tablet')
+    white-space: normal
+    text-align: center
