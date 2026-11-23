@@ -5,8 +5,8 @@ module.exports = (game) ->
     { hand, yaku, wall, seatWind, prevalentWind } = game
 
     tiles = hand.tiles()
-    dora = getDoras(tiles, wall[2..5])
-    uraDora = getDoras(tiles, wall[9..12])
+    dora = getDoras(tiles, wall[2..6])
+    uraDora = getDoras(tiles, wall[9..13])
 
     fan = sumBy yaku, 'fan'
     fan += dora

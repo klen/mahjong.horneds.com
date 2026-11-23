@@ -32,7 +32,8 @@ test 'test shou_sangen', ->
 
 test 'selects highest-fan decomposition for ambiguous hands', ->
     hand = Hand.create('s1s2s3s1s2s3s1s2s3s4s5s6s1s1')
-    hand.wait = hand.tiles().find (tile) -> tile.tile == 's1'
+    # wait in the chow, so sanankou stays valid on ron and the choice is not random
+    hand.wait = hand.tiles().find (tile) -> tile.tile == 's4'
 
     { yaku } = analyze { hand }
     names = (item.name for item in yaku)

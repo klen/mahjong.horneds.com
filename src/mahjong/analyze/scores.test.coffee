@@ -15,10 +15,13 @@ test 'counts fu for concealed honor kan', ->
     hand.tsumo = true
     hand.wait = hand.sets[1].tiles[1]
 
+    wall = (new Tile('m1') for _ in [1..14])
+    tile.isClosed = true for tile in wall
+
     game =
         hand: hand
         yaku: []
-        wall: (new Tile('m1') for _ in [1..14])
+        wall: wall
         seatWind: 'wS'
         prevalentWind: 'wE'
 

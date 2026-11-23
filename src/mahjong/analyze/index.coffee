@@ -55,6 +55,7 @@ module.exports = (game) ->
     best = null
 
     for candidate in candidates
+        linkSets candidate
         candidate.options = {}
         candidate.tsumo = tsumo
 
@@ -71,6 +72,7 @@ module.exports = (game) ->
             best.hand.options.riichi = true
             best.yaku.push name: 'riichi', fan: 1, desc: "Concealed waiting hand declared at 1,000 points stake."
 
+    linkSets best.hand
     hand.sets = best.hand.sets
     hand.pair = best.hand.pair
     hand.wait = best.hand.wait
@@ -82,6 +84,12 @@ module.exports = (game) ->
         hand
         yaku: orderBy best.yaku, 'fan', ['desc']
     }
+
+
+# Tiles remember their set from the last variant built; relink before use
+linkSets = (hand) ->
+    for set in [hand.pair, hand.sets...]
+        t.set = set for t in set.tiles
 
 
 evaluateYaku = (game) ->
