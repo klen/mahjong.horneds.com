@@ -1,10 +1,10 @@
 import flatten from 'lodash/flatten'
 import orderBy from 'lodash/orderBy'
-import sample from 'lodash/sample'
 import some from 'lodash/some'
 import uniq from 'lodash/uniq'
 
 import { SUITS, Suit } from './resources'
+import { sample } from './random'
 
 let uid = 0
 

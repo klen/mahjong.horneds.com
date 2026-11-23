@@ -1,9 +1,6 @@
-import random from 'lodash/random'
-import sample from 'lodash/sample'
-import shuffle from 'lodash/shuffle'
-
 import { Hand, Tile, TileSet } from './tiles'
 import { SUITS, TILES } from './resources'
+import { random, sample, shuffle } from './random'
 import { GeneratedGame } from './types'
 
 const HONORS_PERCENT = 70

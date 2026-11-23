@@ -1,8 +1,8 @@
 import orderBy from 'lodash/orderBy'
-import random from 'lodash/random'
 import sumBy from 'lodash/sumBy'
 
 import { Hand, Tile, TileSet } from '../tiles'
+import { random } from '../random'
 import { GameState, Yaku, YakuItem } from '../types'
 
 import fu from './fu'

@@ -1,8 +1,13 @@
 jest.mock('mahjong', () => ({ __esModule: true, default: jest.fn() }))
-jest.mock('lodash/random', () => ({ __esModule: true, default: jest.fn() }))
+jest.mock('mahjong/random', () => ({
+    __esModule: true,
+    random: jest.fn(),
+    newSeed: jest.fn(),
+    setSeed: jest.fn(),
+}))
 
 const generate = require('mahjong').default as jest.Mock
-const random = require('lodash/random').default as jest.Mock
+const { random, newSeed, setSeed } = require('mahjong/random') as Record<string, jest.Mock>
 const actions = require('./actions').default
 
 
@@ -17,11 +22,28 @@ const run = (main?: number) => {
     return { dispatch, action: dispatch.mock.calls[0][0] }
 }
 
+// behave like redux-thunk: run thunks, pass actions on
+const init = () => {
+    const dispatched: any[] = []
+    const dispatch: any = jest.fn((action: any) => {
+        dispatched.push(action)
+        if (typeof action === 'function') return action(dispatch, getState())
+        return action
+    })
+
+    actions.init()(dispatch)
+    return dispatched
+}
+
 
 beforeEach(() => {
+    window.history.replaceState(null, '', '/')
     generate.mockReset()
     random.mockReset()
     random.mockReturnValue(99)
+    newSeed.mockReset()
+    newSeed.mockReturnValue(1)
+    setSeed.mockReset()
 })
 
 
@@ -69,20 +91,59 @@ test('reload draws no more than REPEATS hands', () => {
 })
 
 
+test('reload puts the seed of the hand into the url', () => {
+    newSeed.mockReturnValue(42)
+    generate.mockReturnValueOnce(game(2000, 5))
+
+    run()
+
+    // the seed goes to the generator and to the url, so the link draws the same hand
+    expect(setSeed).toHaveBeenCalledWith(42)
+    expect(location.hash).toEqual('#42')
+})
+
+
+test('reload draws a shared hand once, from its own seed', () => {
+    generate.mockReturnValueOnce(game(2000, 5))
+
+    const dispatch = jest.fn((action: any) => action)
+    actions.reload(7)(dispatch, getState())
+
+    expect(setSeed).toHaveBeenCalledWith(7)
+    expect(generate).toHaveBeenCalledTimes(1)
+    expect(dispatch.mock.calls[0][0].payload).toEqual(game(2000, 5))
+    expect(location.hash).toEqual('#7')
+})
+
+
 test('init leads to a reload', () => {
     generate.mockReturnValueOnce(game(2000, 5))
 
-    // behave like redux-thunk: run thunks, pass actions on
-    const dispatched: any[] = []
-    const dispatch: any = jest.fn((action: any) => {
-        dispatched.push(action)
-        if (typeof action === 'function') return action(dispatch, getState())
-        return action
-    })
-
-    actions.init()(dispatch)
+    const dispatched = init()
 
     expect(dispatched.some((action) => action && action.type === actions.TYPES.RELOAD)).toBeTruthy()
+})
+
+
+test('init replays the hand from the url', () => {
+    window.history.replaceState(null, '', '/#1234')
+    generate.mockReturnValueOnce(game(2000, 5))
+
+    init()
+
+    expect(setSeed).toHaveBeenCalledWith(1234)
+    expect(generate).toHaveBeenCalledTimes(1)
+})
+
+
+test('init ignores a url without a seed', () => {
+    window.history.replaceState(null, '', '/#nonsense')
+    generate.mockReturnValueOnce(game(2000, 5))
+
+    init()
+
+    expect(setSeed).toHaveBeenCalledWith(1)
+    expect(generate).toHaveBeenCalledTimes(1)
 })
 
 

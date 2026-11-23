@@ -4,9 +4,13 @@ import fu from './fu'
 
 // our transform does not hoist jest.mock above the imports, so the mocked
 // modules are required by hand after the mock is in place
-jest.mock('lodash/random', () => ({ __esModule: true, default: jest.fn() }))
+jest.mock('../random', () => ({
+    __esModule: true,
+    ...jest.requireActual('../random'),
+    random: jest.fn(),
+}))
 
-const mockRandom = require('lodash/random').default as jest.Mock
+const mockRandom = require('../random').random as jest.Mock
 const analyze = require('./index').default as typeof import('./index').default
 
 
