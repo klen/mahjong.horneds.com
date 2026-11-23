@@ -1,5 +1,7 @@
 import { Hand } from '../tiles'
 
+import fu from './fu'
+
 // our transform does not hoist jest.mock above the imports, so the mocked
 // modules are required by hand after the mock is in place
 jest.mock('lodash/random', () => ({ __esModule: true, default: jest.fn() }))
@@ -74,6 +76,21 @@ test('opened hands keep their decomposition', () => {
 
     expect(result.isOpened).toBeTruthy()
     expect(names(yaku)).not.toContain('riichi')
+})
+
+
+test('the wait is placed where it scores the most', () => {
+    mockRandom.mockReturnValueOnce(0) // tsumo
+    mockRandom.mockReturnValueOnce(99) // no riichi
+    // 6s6s7s7s7s8s8s8s9s NNN 8m8m drawn on 8s: the 789 chow turns it into a kanchan
+    const hand = Hand.create('s6s7s8s6s7s8s7s8s9wNwNwNm8m8')
+    hand.wait = hand.sets[2].tiles[1]
+
+    const { hand: result, yaku } = analyze({ hand })
+
+    expect(names(yaku)).toEqual(['iipeikou', 'tsumo'])
+    expect(result.wait!.set!.tiles.map((tile) => tile.tile)).toEqual(['s7', 's8', 's9'])
+    expect(fu(result, 2).minipoints).toEqual(40)
 })
 
 

@@ -5,6 +5,8 @@ import sumBy from 'lodash/sumBy'
 import { Hand, Tile, TileSet } from '../tiles'
 import { GameState, Yaku, YakuItem } from '../types'
 
+import fu from './fu'
+
 import chuuren from './yaku/chuuren'
 import suuankou from './yaku/suuankou'
 import suukantsu from './yaku/suukantsu'
@@ -83,21 +85,33 @@ export default <T extends GameState>(game: T): T & { yaku: YakuItem[] } => {
     const tsumo = TSUMO_PERCENT > random(100)
 
     const candidates = buildCandidates(hand)
-    let best: { hand: Hand, yaku: YakuItem[], score: number } | null = null
+    let best: { hand: Hand, wait: Tile, yaku: YakuItem[], score: number } | null = null
 
     for (const candidate of candidates) {
         linkSets(candidate)
-        candidate.options = {}
         candidate.tsumo = tsumo
 
-        const yakuList = evaluateYaku({ ...game, hand: candidate })
-        const score = sumBy(yakuList, 'fan')
+        // the winning tile can complete any of the equal tiles in the hand, so try every placement
+        for (const wait of findWaits(candidate, hand.wait)) {
+            candidate.options = {}
+            candidate.wait = wait
 
-        if (best && best.score >= score) continue
-        best = { hand: candidate, yaku: yakuList, score }
+            const yakuList = evaluateYaku({ ...game, hand: candidate })
+            // shortcut: dora is ignored, it is the same for every variant and only matters
+            // when it lifts one of them over a mangan limit, upgrade if that ever shows up
+            const score = fu(candidate, sumBy(yakuList, 'fan'), game.seatWind, game.prevalentWind).basePoints
+
+            if (best && best.score >= score) continue
+            best = { hand: candidate, wait, yaku: yakuList, score }
+        }
     }
 
-    if (!best) best = { hand, yaku: [], score: 0 }
+    if (!best) best = { hand, wait: hand.wait!, yaku: [], score: 0 }
+
+    // options were reset for every wait, so rebuild them for the chosen one
+    best.hand.wait = best.wait
+    best.hand.options = {}
+    best.yaku = evaluateYaku({ ...game, hand: best.hand })
 
     if (!best.hand.isOpened) {
         if (!best.yaku.length || RIICHI_PERCENT >= random(100)) {
@@ -173,7 +187,7 @@ const buildCandidates = (hand: Hand): Hand[] => {
                 ...meld.map((group) => new TileSet(...group)),
                 new TileSet(...pair),
             )
-            candidate.wait = findWait(candidate, waitTile)
+            candidate.wait = findWaits(candidate, waitTile)[0]
             candidate.isOpened = false
 
             const signature = handSignature(candidate)
@@ -237,11 +251,10 @@ const collectMelds = (tiles: Tile[], chain: Tile[][], acc: Tile[][][]): void => 
 }
 
 
-const findWait = (hand: Hand, waitTile: Tile | null): Tile | null => {
-    if (!waitTile) return hand.wait
-    for (const tile of hand.tiles())
-        if (tile.tile === waitTile.tile) return tile
-    return hand.wait
+const findWaits = (hand: Hand, waitTile: Tile | null): Tile[] => {
+    if (!waitTile) return [hand.wait!]
+    const waits = hand.tiles().filter((tile) => tile.tile === waitTile.tile)
+    return waits.length ? waits : [hand.wait!]
 }
 
 

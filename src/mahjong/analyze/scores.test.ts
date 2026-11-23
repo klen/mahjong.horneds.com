@@ -116,11 +116,11 @@ test('limits by fan', () => {
 })
 
 
-test('13 han without yakuman is capped at sanbaiman', () => {
+test('13 han without yakuman is a counted yakuman', () => {
     const result = score(ronHand('m4m5m6 p4p5p6 s4s5s6 m7m8m9 wNwN'), 13)
 
-    expect(result.fan).toEqual(12)
-    expect(result.scores.main).toEqual(24000)
+    expect(result.fan).toEqual(13)
+    expect(result.scores.main).toEqual(32000)
 })
 
 
