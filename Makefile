@@ -1,3 +1,7 @@
+# webpack 4 hashes with md4, which node >= 17 no longer ships
+# shortcut: drop when the build moves to webpack 5
+export NODE_OPTIONS := --openssl-legacy-provider
+
 all:
 	npx coffee src/tiles.coffee
 
