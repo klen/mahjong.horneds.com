@@ -18,16 +18,16 @@
             <div class="u-red-l u-mt2" style="opacity: .6">Disclaimer: This is a beta version. Bugs could be possible. Please report issues.</div>
         </div>
     </div>
+    <script type="text/ts">
+        require('tags/game')
+        require('tags/history')
 
-    <script type="text/coffeescript">
-        require 'tags/game'
-        require 'tags/history'
+        this.VERSION = VERSION
 
-        @VERSION = VERSION
-
-        @onNext = (e) ->
-            @tags.game.actions.reload()
+        this.onNext = (e) => {
+            this.tags.game.actions.reload()
             window.scrollTo(0, 0)
+        }
 
     </script>
 </app>

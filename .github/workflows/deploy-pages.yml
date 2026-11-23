@@ -35,6 +35,12 @@ jobs:
       - name: Install dependencies
         run: make node_modules
 
+      - name: Type check
+        run: make check
+
+      - name: Tests
+        run: make coverage
+
       - name: Build static site
         run: NODE_OPTIONS=--openssl-legacy-provider make production
 

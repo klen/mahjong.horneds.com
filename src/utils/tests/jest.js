@@ -1,15 +1,24 @@
-const CoffeeScript = require('coffeescript');
+const ts = require('typescript');
 
 
 module.exports = {
 
   process: (src, path) => {
 
-    if(!CoffeeScript.helpers.isCoffee(path)) return src;
+    if (!path.endsWith('.ts')) return src;
 
-    return CoffeeScript.compile(src, { 
-      bare: true, inlineMap: true,
+    const out = ts.transpileModule(src, {
+      fileName: path,
+      compilerOptions: {
+        module: ts.ModuleKind.CommonJS,
+        target: ts.ScriptTarget.ES2018,
+        esModuleInterop: true,
+        sourceMap: true,
+        inlineSources: true,
+      },
     });
+
+    return { code: out.outputText, map: out.sourceMapText || null };
   }
 
 };

@@ -5,11 +5,10 @@
             <tile each={ tile in opts.tiles } tile={ tile } label="{ opts.noTitle && 'Ura-dora' || 'Dora' } is { descTiles[tile.next()] }" />
         </div>
     </div>
+    <script type="text/ts">
+        require('tags/tile')
+        require('./styles.sass')
 
-    <script type="text/coffeescript">
-        require 'tags/tile'
-        require './styles.sass'
-
-        { desc: @descTiles } = require 'utils/tiles'
+        this.descTiles = require('utils/tiles').desc
     </script>
 </wall>

@@ -2,9 +2,6 @@
 # shortcut: drop when the build moves to webpack 5
 export NODE_OPTIONS := --openssl-legacy-provider
 
-all:
-	npx coffee src/tiles.coffee
-
 node_modules: $(CURDIR)/package.json
 	yarn
 
@@ -20,9 +17,17 @@ production: node_modules
 dev: node_modules
 	NODE_ENV=development $(CURDIR)/node_modules/.bin/webpack-dev-server --mode development --open --config=$(CURDIR)/src/webpack.config.js --port=5000
 
+.PHONY: check
+check: node_modules
+	$(CURDIR)/node_modules/.bin/tsc --noEmit
+
 .PHONY: test t
 test t: node_modules
 	$(CURDIR)/node_modules/.bin/jest
+
+.PHONY: coverage
+coverage: node_modules
+	$(CURDIR)/node_modules/.bin/jest --coverage
 
 .PHONY: docker
 docker:

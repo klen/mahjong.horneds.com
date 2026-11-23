@@ -3,10 +3,9 @@
         <span class="u-mb3">{ opts.title }</span>
         <img src={ tiles.black[opts.wind] } />
     </div>
+    <script type="text/ts">
+        require('./styles.sass')
 
-    <script type="text/coffeescript">
-        require './styles.sass'
-
-        @tiles = require 'utils/tiles'
+        this.tiles = require('utils/tiles')
     </script>
 </wind>

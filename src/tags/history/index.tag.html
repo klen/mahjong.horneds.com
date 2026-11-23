@@ -33,12 +33,11 @@
             </tr>
         </tbody>
     </table>
+    <script type="text/ts">
 
-    <script type="text/coffeescript">
-
-        @mixin 'redux'
-        @actions require './actions'
-        @subscribe require './selector'
+        this.mixin('redux')
+        this.actions(require('./actions').default)
+        this.subscribe(require('./selector').default)
 
     </script>
 

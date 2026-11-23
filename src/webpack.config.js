@@ -1,27 +1,30 @@
 const path = require('path'), webpack = require('webpack'),
+      riot = require('riot-compiler'),
       HtmlWebpackPlugin = require('html-webpack-plugin'),
       HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
+
+riot.parsers.js.ts = require('./utils/riot-ts');
+
 
 module.exports = (env) => {
 
   env = env || process.env;
 
   const isDev = env.NODE_ENV == 'development';
-  const babelOptions = isDev ? {} : {
-      presets: [
-        ['@babel/env', {
-          useBuiltIns: 'usage',
-          corejs: 3
-        }]
-      ]
-  };
+  const envPreset = ['@babel/env', {
+      useBuiltIns: 'usage',
+      corejs: 3
+  }];
+  const babelOptions = isDev ? {} : { presets: [envPreset] };
+  // presets run in reverse order: typescript strips the types before preset-env sees them
+  const tsOptions = { presets: [envPreset, ['@babel/preset-typescript', {}]] };
 
   return {
     mode: isDev ? 'development' : 'production',
     devtool: isDev && 'inline-source-map',
 
     entry: {
-      index: './src/index.coffee',
+      index: './src/index.ts',
     },
 
     output: {
@@ -32,7 +35,7 @@ module.exports = (env) => {
 
     resolve: {
       modules: [ 'node_modules', __dirname ],
-      extensions: [ '.js', '.coffee' ]
+      extensions: [ '.ts', '.js' ]
     },
 
     plugins: [
@@ -68,15 +71,13 @@ module.exports = (env) => {
 
       rules: [
 
-        // CoffeeScript
+        // TypeScript
         {
-          test: /\.coffee$/,
-          use:  [
-            {
-              loader: 'coffee-loader',
-              options: isDev ? {} : { transpile: babelOptions }
-            }
-          ]
+          test: /\.ts$/,
+          use: {
+            loader: 'babel-loader',
+            options: tsOptions
+          }
         },
 
         // Riot HTML tags

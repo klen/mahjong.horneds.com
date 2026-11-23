@@ -145,34 +145,34 @@
             </table>
         </yield>
     </modal>
+    <script type="text/ts">
+        require('tags/common/modal')
+        require('./styles.sass')
 
-    <script type="text/coffeescript">
-        require 'tags/common/modal'
-        require './styles.sass'
+        this.config = require('./config').default
+        this.modal = false
+        this.scores = this.config.scores.other
 
-        @config = require './config'
-        @modal = false
-        @scores = @config.scores.other
+        this.mixin('redux')
+        this.subscribe(require('./selector').default)
+        this.actions(require('./actions').default)
 
-        @mixin 'redux'
-        @subscribe require './selector'
-        @actions require './actions'
+        this.on('mount', () => this.update())
 
-        @on 'mount', -> @update()
+        this.on('update', () => {
+            this.scores = this.config.scores.other
+            if (this.state.seatWind === 'wE') this.scores = this.config.scores.east
+        })
 
-        @on 'update', ->
-            @scores = @config.scores.other
-            @scores = @config.scores.east if @state.seatWind == 'wE'
+        this.onSelectFan = (value) => () => this.actions.showFans(value)
 
-        @onSelectFan = (value) => =>
-            @actions.showFans value
+        this.onSelectScores = (value) => (e) => {
+            this.actions.showScores(value)
+            this.tags['modal'].onClose(e)
+        }
 
-        @onSelectScores = (value) => (e) =>
-            @actions.showScores value
-            @tags['modal'].onClose(e)
-
-        @onShowScores = => @update modal: true
-        @onClose = => @update modal: false
+        this.onShowScores = () => this.update({ modal: true })
+        this.onClose = () => this.update({ modal: false })
 
     </script>
 

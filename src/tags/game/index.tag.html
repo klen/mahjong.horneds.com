@@ -19,25 +19,26 @@
         <scores />
 
     </div>
+    <script type="text/ts">
+        require('tags/hand')
+        require('tags/wind')
+        require('tags/wall')
+        require('tags/scores')
 
-    <script type="text/coffeescript">
-        require 'tags/hand'
-        require 'tags/wind'
-        require 'tags/wall'
-        require 'tags/scores'
+        require('./styles.sass')
 
-        require './styles.sass'
+        this.mixin('redux')
+        this.actions(require('./actions').default)
+        this.subscribe(require('./selector').default)
 
-        @mixin 'redux'
-        @actions require './actions'
-        @subscribe require './selector'
+        this.on('mount', () => {
+            this.actions.init()
+        })
 
-        @on 'mount', ->
-            @actions.init()
-
-        @on 'update', ->
-            @wall1 = @state.wall[0..6]
-            @wall2 = @state.wall[7..13]
+        this.on('update', () => {
+            this.wall1 = this.state.wall.slice(0, 7)
+            this.wall2 = this.state.wall.slice(7, 14)
+        })
 
     </script>
 </game>
