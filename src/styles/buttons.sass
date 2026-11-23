@@ -1,3 +1,5 @@
+@use 'sass:color'
+
 @import './variables'
 
 .c-button
@@ -18,7 +20,7 @@
   justify-content: center
 
   // &:hover:enabled
-    // background: darken($button-bg-default, 10%)
+    // background: color.adjust($button-bg-default, $lightness: -10%)
     // color: $button-fg-default
 
   &:focus
@@ -31,7 +33,7 @@
     cursor: not-allowed
 
   &:active, &--active
-    background: lighten($button-bg-default, 5%)
+    background: color.adjust($button-bg-default, $lightness: 5%)
     transition: all .2s
 
   &__sep
@@ -50,20 +52,20 @@
 
 @each $name, $color in $colors
 
-  .c-button--#{$name}
+  .c-button--#{"" + $name}
     background: $color
     border: 1px solid $color
     color: $white
 
     &:disabled
       color: $white
-      background: lighten($color, 20%)
+      background: color.adjust($color, $lightness: 20%)
 
     &:active,&.is-active
-      background: lighten($color, 25%)
+      background: color.adjust($color, $lightness: 25%)
 
     // &:hover:enabled
-      // background: darken($color, 10%)
+      // background: color.adjust($color, $lightness: -10%)
 
 .c-button--white
     background: $white
@@ -71,11 +73,11 @@
     border: 1px solid $gray-l
 
     &:disabled
-      background: darken($white, 20%)
-      border-color: darken($white, 20%)
+      background: color.adjust($white, $lightness: -20%)
+      border-color: color.adjust($white, $lightness: -20%)
 
     &:active,&.is-active
-      background: darken($white, 25%)
+      background: color.adjust($white, $lightness: -25%)
 
 .c-button--link
     background: none
@@ -89,12 +91,12 @@
 @media (hover:hover), (hover:on-demand)
 
   .c-button:hover:enabled
-    background: darken($button-bg-default, 10%)
+    background: color.adjust($button-bg-default, $lightness: -10%)
     color: $button-fg-default
 
   @each $name, $color in $colors
-    .c-button--#{$name}:hover:enabled
-      background: darken($color, 10%)
+    .c-button--#{"" + $name}:hover:enabled
+      background: color.adjust($color, $lightness: -10%)
 
   .c-button--white:hover:enabled
       border: 1px solid $black

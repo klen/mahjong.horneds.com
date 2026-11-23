@@ -1,6 +1,8 @@
+@use 'sass:color'
+
 .c-control
   -webkit-appearance: none
-  background-color: lighten($gray-l, 10%)
+  background-color: color.adjust($gray-l, $lightness: 10%)
   border-radius: $border-radius
   border: 1px solid $white
   color: $black

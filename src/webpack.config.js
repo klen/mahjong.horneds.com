@@ -99,7 +99,13 @@ module.exports = (env) => {
         // Sass
         {
           test: /\.(scss|sass)$/,
-          use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+          use: [
+            'style-loader',
+            'css-loader',
+            'postcss-loader',
+            // quietDeps: don't repeat deprecations coming from node_modules
+            {loader: 'sass-loader', options: {quietDeps: true}},
+          ]
         },
 
         // Files

@@ -1,11 +1,13 @@
+@use 'sass:color'
+
 $white:         #ffffff
 $black:         #2e3346
 $yellow:        #ffff99
 $brown:         #b15928
-$brown-l:       lighten($brown, 25%)
+$brown-l:       color.adjust($brown, $lightness: 25%)
 $blue-l:        #a6cee3
 $blue:          #1f78b4
-$blue-d:        darken($blue, 25%) !default
+$blue-d:        color.adjust($blue, $lightness: -25%) !default
 $green-l:       #b2df8a
 $green:         #33a02c
 $red-l:         #fb9a99
