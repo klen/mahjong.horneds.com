@@ -90,3 +90,96 @@ test('next hand deals a new hand', () => {
 
     app.unmount()
 })
+
+
+test('opens the hand from its url', () => {
+    const game = (app: any) => (Array.isArray(app.tags.game) ? app.tags.game[0] : app.tags.game).state
+
+    // a fresh visit, not a replay of the hand another test left in the url
+    window.history.replaceState(null, '', '/')
+    const first = mountApp()
+    const link = location.hash
+    const hand = game(first).hand.tiles().map((tile: any) => tile.tile)
+    const scores = game(first).scores.main
+    first.unmount()
+
+    window.history.replaceState(null, '', link)
+
+    const shared = mountApp()
+
+    expect(game(shared).hand.tiles().map((tile: any) => tile.tile)).toEqual(hand)
+    expect(game(shared).scores.main).toEqual(scores)
+
+    shared.unmount()
+})
+
+
+test('number keys pick the han, then the points', () => {
+    const app = mountApp()
+    const game = Array.isArray(app.tags.game) ? app.tags.game[0] : app.tags.game
+    const scores = game.tags.scores
+
+    const press = (key: string) => document.dispatchEvent(new KeyboardEvent('keydown', { key }))
+
+    press('7')
+    expect(scores.state.userFans).toEqual(7)
+    expect(scores.state.userScores).toBeFalsy()
+
+    // the han is in, so 1..5 pick the fixed limits
+    press('1')
+    expect(scores.state.userScores).toEqual(scores.scores.limits[0].value)
+
+    // a new hand clears the answers, so the keys pick the han again
+    app.onNext()
+    press('4')
+    expect(scores.state.userFans).toEqual(4)
+    expect(scores.state.userScores).toBeFalsy()
+
+    // 0 opens the points table and there the keys pick the values in ascending order
+    press('0')
+    expect(scores.modal).toBeTruthy()
+    press('3')
+    expect(scores.state.userScores).toEqual(scores.tableValues()[2])
+
+    // the answer is in, the keys step aside
+    press('5')
+    expect(scores.state.userScores).toEqual(scores.tableValues()[2])
+
+    app.unmount()
+})
+
+
+test('number keys stay quiet once the scores tag is gone', () => {
+    const app = mountApp()
+    app.unmount()
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: '5' }))
+
+    expect((store.getState() as any).app.scores.userFans).toBeFalsy()
+})
+
+
+test('space deals the next hand, but not over the points table', () => {
+    const app = mountApp()
+    const game = Array.isArray(app.tags.game) ? app.tags.game[0] : app.tags.game
+    const scores = game.tags.scores
+    const number = game.state.number
+
+    const press = (key: string) => document.dispatchEvent(new KeyboardEvent('keydown', { key }))
+
+    press('3') // the han is in
+    press('0') // the points table is up
+    expect(scores.modal).toBeTruthy()
+
+    press(' ')
+    expect(game.state.number).toEqual(number)
+
+    press('1') // a pick closes the table
+    expect(scores.modal).toBeFalsy()
+
+    press(' ')
+    expect(game.state.number).toEqual(number + 1)
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 0)
+
+    app.unmount()
+})

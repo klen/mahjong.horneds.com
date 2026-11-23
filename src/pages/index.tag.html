@@ -31,5 +31,18 @@
             window.scrollTo(0, 0)
         }
 
+        // space deals the next hand, unless the points table is open
+        this.onKey = (e) => {
+            if (e.key !== ' ' || e.repeat || e.ctrlKey || e.metaKey || e.altKey) return
+            const scores = this.tags.game && this.tags.game.tags.scores
+            if (scores && scores.modal) return
+            // the button under the cursor also reacts to space on its own
+            e.preventDefault()
+            this.onNext(e)
+        }
+
+        this.on('mount', () => document.addEventListener('keydown', this.onKey))
+        this.on('unmount', () => document.removeEventListener('keydown', this.onKey))
+
     </script>
 </app>

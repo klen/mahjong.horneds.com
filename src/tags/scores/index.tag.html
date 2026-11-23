@@ -157,7 +157,12 @@
         this.subscribe(require('./selector').default)
         this.actions(require('./actions').default)
 
-        this.on('mount', () => this.update())
+        this.on('mount', () => {
+            document.addEventListener('keydown', this.onKey)
+            this.update()
+        })
+
+        this.on('unmount', () => document.removeEventListener('keydown', this.onKey))
 
         this.on('update', () => {
             this.scores = this.config.scores.other
@@ -166,9 +171,42 @@
 
         this.onSelectFan = (value) => () => this.actions.showFans(value)
 
+        // 1..9 pick that many han (0 picks 10). With the han in, 1..5 pick the fixed limits
+        // and 0 opens the points table, where the same keys pick the values in ascending order
+        this.onKey = (event) => {
+            if (event.ctrlKey || event.metaKey || event.altKey) return
+            const key = '1234567890'.indexOf(event.key)
+            if (key < 0 || this.state.userScores) return
+
+            if (!this.state.userFans) {
+                this.actions.showFans(key + 1)
+                return
+            }
+
+            if (this.modal) {
+                const value = this.tableValues()[key]
+                if (value) this.onSelectScores(value)(event)
+                return
+            }
+
+            const limit = this.scores.limits[key]
+            if (limit) this.onSelectScores(limit.value)(event)
+            else if (key === 9) this.onShowScores()
+        }
+
+        // the values of the points table, ascending: the order the number keys pick them
+        this.tableValues = () => {
+            const values = new Set()
+            for (const row of this.scores.fans)
+                for (const item of row) if (item) values.add(item.value)
+            return [...values].sort((a, b) => a - b)
+        }
+
         this.onSelectScores = (value) => (e) => {
             this.actions.showScores(value)
             this.tags['modal'].onClose(e)
+            // the flag drops now, not after the closing animation, so space deals at once
+            this.update({ modal: false })
         }
 
         this.onShowScores = () => this.update({ modal: true })
