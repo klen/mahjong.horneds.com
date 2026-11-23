@@ -1,4 +1,5 @@
 @import 'src/styles/variables'
+@import '~include-media/dist/include-media'
 
 .c-riichi
   background: $white
@@ -10,3 +11,20 @@
   font-size: 2em
   line-height: 20px
   cursor: default
+  max-width: 100%
+
+  @include media('<tablet')
+    margin-top: 1rem
+
+
+.mj-riichi-row
+  display: flex
+  justify-content: space-between
+  align-items: flex-end
+  width: 100%
+  margin-top: .5rem
+
+  @include media('<tablet')
+    grid-column: 1 / -1
+    flex-direction: column-reverse
+    align-items: center

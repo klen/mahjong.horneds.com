@@ -5,6 +5,7 @@
 - Runtime entry is `src/index.ts` -> `src/pages/index.ts` -> Riot tags in `src/tags/**`.
 - App state is initialized in `src/store.ts`; top-level reducers are `tags/game`, `tags/scores`, and `tags/history`.
 - Mahjong generation/scoring logic lives in `src/mahjong/**`; this is the main test-heavy domain area.
+- Tile tooltips: the `tile` tag renders `aria-label`/`title` from `label` (microtip) for open tiles only; names come from `desc` in `src/utils/tiles.ts`.
 
 ## Commands you should actually use
 - Install deps: `make node_modules` (uses `yarn`).

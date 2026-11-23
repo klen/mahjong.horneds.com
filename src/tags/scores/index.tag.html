@@ -1,7 +1,7 @@
 <scores>
 
     <div class="u-mt3 u-size-s">
-        <div class="u-gray-l u-mb1"> Select Number of Han</div>
+        <div class="u-gray-l u-mb1">2. Select the number of han</div>
 
         <button
             each={ item in config.yaku }
@@ -40,7 +40,7 @@
     </div>
 
     <div class="u-mt3 u-size-s">
-        <div class="u-gray-l u-mb1"> Select Scores</div>
+        <div class="u-gray-l u-mb1">3. Select the score</div>
         <button onclick={ onShowScores } class="c-button u-mr1 u-mb1 {
                 'c-button--green': state.correctScores && state.userScores <= scores.fans[3][1].value,
                 'c-button--red':  state.userScores && !state.correctScores && state.userScores <= scores.fans[3][1].value,

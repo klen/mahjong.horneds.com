@@ -28,8 +28,14 @@ body
     gap: 1rem
 
 .mj-dora-list
+  margin-left: auto
+
   @include media('<tablet')
     grid-column: 1 / -1
+    margin-left: 0
+
+    .c-wall__tiles
+      justify-content: center
 
 .mj-hand
   justify-content: space-between

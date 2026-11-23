@@ -23,7 +23,8 @@
 @include media('<tablet')
 
   .c-tile
-    width: 40px
+    // keep the 3:4 tile ratio, the back image is 3:4 and would overflow otherwise
+    width: 45px
     height: 60px
 
     &__img

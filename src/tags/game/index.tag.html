@@ -1,20 +1,20 @@
 <game>
     <div if={ state.inited }>
-        <div class="u-flex u-mt4 mj-header">
+        <div class="u-flex u-flex--wrap u-mt4 mj-header">
             <wind wind={ state.seatWind } seat={ true } title="seat"/>
             <wind wind={ state.prevalentWind } title="round"/>
-            <div class="u-mla mj-dora-list">
+            <div class="mj-dora-list">
                 <wall tiles={ wall1 } />
-            <div if={ state.hand.options.riichi } class="u-mla">
+            </div>
+            <div if={ state.hand.options.riichi } class="mj-riichi-row">
+                <div class="c-riichi" aria-label="The Player has declared Riichi" role="tooltip" data-microtip-position="top" tabindex="0">•</div>
                 <wall tiles={ wall2 } no-title={ true }/>
             </div>
-            </div>
-        </div>
-        <div class="u-mt4 u-mb4">
-            <div if={ state.hand.options.riichi } class="c-riichi" aria-label="The Player has declared Riichi" role="tooltip" data-microtip-position="top" tabindex="0">•</div>
         </div>
 
-        <hand hand={ state.hand } number={ state.number }/>
+        <div class="u-mt4">
+            <hand hand={ state.hand } number={ state.number }/>
+        </div>
 
         <scores />
 
