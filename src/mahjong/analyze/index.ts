@@ -253,7 +253,8 @@ const collectMelds = (tiles: Tile[], chain: Tile[][], acc: Tile[][][]): void => 
 
 const findWaits = (hand: Hand, waitTile: Tile | null): Tile[] => {
     if (!waitTile) return [hand.wait!]
-    const waits = hand.tiles().filter((tile) => tile.tile === waitTile.tile)
+    // a called set is already complete, so the wait can only be in a concealed set
+    const waits = hand.tiles().filter((tile) => tile.tile === waitTile.tile && !tile.set!.isOpened)
     return waits.length ? waits : [hand.wait!]
 }
 

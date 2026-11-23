@@ -9,9 +9,24 @@ jest.mock('./generator', () => {
 const { generateGameState } = require('./generator') as { generateGameState: jest.Mock }
 const generate = require('./index').default
 
+const { Hand, Tile } = require('./tiles') as typeof import('./tiles')
+
+const game = (mask: string): any => ({
+    hand: Hand.create(mask),
+    wall: Array.from({ length: 14 }, () => new Tile('m9')).map((tile) => {
+        tile.isClosed = true
+        return tile
+    }),
+    seatWind: 'wS',
+    prevalentWind: 'wE',
+})
+
 
 test('redraws until the generator produces a hand', () => {
-    generateGameState.mockReturnValueOnce(undefined).mockReturnValueOnce(undefined)
+    generateGameState
+        .mockReturnValueOnce(undefined)
+        .mockReturnValueOnce(undefined)
+        .mockReturnValueOnce(game('m2m3m4 p4p5p6 s4s5s6 m6m7m8 m5m5'))
 
     const result = generate()
 

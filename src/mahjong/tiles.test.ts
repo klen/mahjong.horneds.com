@@ -131,6 +131,19 @@ test('Hand:push keeps four sets and a pair and picks a wait', () => {
 })
 
 
+test('Hand: the wait never lands in an opened set', () => {
+    const hand = new Hand()
+    const opened = TileSet.create('m1m2m3')
+    hand.push(opened)
+    opened.isOpened = true
+    for (const mask of ['p1p2p3', 's1s2s3', 'p7p8p9']) hand.push(TileSet.create(mask))
+    hand.push(TileSet.create('wNwN'))
+
+    expect(opened.isOpened).toBeTruthy()
+    expect(hand.wait!.set!.isOpened).toBeFalsy()
+})
+
+
 test('Hand:push ignores invalid sets', () => {
     const hand = new Hand(TileSet.create('m1m3'))
     expect(hand.sets).toHaveLength(0)

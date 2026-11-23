@@ -1,0 +1,25 @@
+@import "~include-media/dist/include-media"
+
+// called sets sit right of the concealed part of the hand
+.mj-hand__called
+  margin-left: 1rem
+
+  & + &
+    margin-left: .5rem
+
+  // a tile turned sideways is as wide as it is tall, so it needs room on both sides
+  .c-tile--open
+    margin-left: .8rem
+    margin-right: .8rem
+
+@include media('<tablet')
+
+  .mj-hand__called
+    margin-left: .6rem
+
+    & + &
+      margin-left: .3rem
+
+    .c-tile--open
+      margin-left: .6rem
+      margin-right: .6rem

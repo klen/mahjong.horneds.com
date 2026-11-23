@@ -124,7 +124,7 @@ export class Hand {
 
         if (!this.pair || this.sets.length !== 4) return
         this.wait = sample(this.tiles())!
-        while (this.wait.set!.isKan) this.wait = sample(this.tiles())!
+        while (this.wait.set!.isKan || this.wait.set!.isOpened) this.wait = sample(this.tiles())!
     }
 
     tiles(): Tile[] {

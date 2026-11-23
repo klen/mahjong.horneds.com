@@ -6,7 +6,10 @@
             </div>
             <div class="u-gray-l u-mb1 u-size-s">1. Review the winning hand</div>
             <div class="u-flex u-flex--wrap">
-                <tile each={ tile in opts.hand.tiles() } if={ tile.id != opts.hand.wait.id } tile={ tile } label={ descTiles[tile.tile] } />
+                <tile each={ tile in concealed() } if={ tile.id != opts.hand.wait.id } tile={ tile } label={ descTiles[tile.tile] } />
+                <div each={ set in called() } class="u-flex mj-hand__called">
+                    <tile each={ tile in set.tiles } open={ tile.id === set.tiles[0].id } tile={ tile } label={ descTiles[tile.tile] } />
+                </div>
             </div>
         </div>
         <div>
@@ -19,6 +22,12 @@
     <script type="text/ts">
         require('tags/tile')
 
+        require('./styles.sass')
+
         this.descTiles = require('utils/tiles').desc
+
+        // called sets are shown apart, the winning tile is drawn separately
+        this.concealed = () => opts.hand.tiles().filter((tile) => !tile.set.isOpened)
+        this.called = () => opts.hand.sets.filter((set) => set.isOpened)
     </script>
 </hand>

@@ -11,6 +11,7 @@ const TERMINALS_PERCENT = 80
 
 const PONS_PERCENT = 30
 const KANS_PERCENT = 1
+const OPENED_PERCENT = 15
 
 
 export const findSet = (tiles: Tile[], pair = false): TileSet | undefined => {
@@ -58,16 +59,20 @@ export const generateGameState = (): GeneratedGame | undefined => {
     for (const tile of wall) tile.isClosed = true
 
     const hand = new Hand()
+    const opened = random(100) < OPENED_PERCENT ? random(1, 2) : 0
     while (hand.sets.length < 4) {
         const set = findSet(tiles)
         if (!set) return
         for (const tile of set.tiles) tiles.splice(tiles.indexOf(tile), 1)
         hand.push(set)
+        // the sets built first are the called ones
+        if (hand.sets.length <= opened) set.isOpened = true
     }
 
     const pair = findSet(tiles, true)
     if (!pair) return
     hand.push(pair)
+    if (opened) hand.isOpened = true
 
     let indicators = 1 + hand.sets.filter((set) => set.isKan).length
     while (random(100) > 75 && indicators < 5) indicators += 1
