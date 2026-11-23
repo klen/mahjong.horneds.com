@@ -1,8 +1,6 @@
 sample = require 'lodash/sample'
 shuffle = require 'lodash/shuffle'
-uniq = require 'lodash/uniq'
 random = require 'lodash/random'
-orderBy = require 'lodash/orderBy'
 
 { Tile, TileSet, Hand } = require './tiles'
 
@@ -13,12 +11,12 @@ HONORS_PERCENT = 70
 TERMINALS_PERCENT = 80
 
 PONS_PERCENT = 30
-KANS_PERCENT = 0
+KANS_PERCENT = 1
 
 findSet = (tiles, pair=false) ->
     for t1, idx1 in tiles
-        continue if t1.isTerminal and random(100) > TERMINALS_PERCENT
-        continue if t1.isHonor and random(100) > HONORS_PERCENT
+        continue if t1.isTerminal and random(100) >= TERMINALS_PERCENT
+        continue if t1.isHonor and random(100) >= HONORS_PERCENT
         for t2, idx2 in tiles[(idx1 + 1)...]
             if pair
                 set = new TileSet(t1, t2)
@@ -26,13 +24,13 @@ findSet = (tiles, pair=false) ->
                 return set
 
             continue unless t1.isConnected t2
-            continue if t2.isTerminal and random(100) > TERMINALS_PERCENT
-            continue if t1.value == t2.value and random(100) > PONS_PERCENT
+            continue if t2.isTerminal and random(100) >= TERMINALS_PERCENT
+            continue if t1.value == t2.value and random(100) >= PONS_PERCENT
             for t3, idx3 in tiles[(idx1 + idx2 + 2)...]
-                continue if t1.isTerminal and random(100) > TERMINALS_PERCENT
+                continue if t1.isTerminal and random(100) >= TERMINALS_PERCENT
                 set = new TileSet(t1, t2, t3)
                 if set.isValid()
-                    return set unless set.isPon and KANS_PERCENT >= random(100)
+                    return set unless set.isPon and random(100) < KANS_PERCENT
                     for t4 in tiles[(idx1 + idx2 + idx3 + 3)...]
                         continue unless t4.tile == t1.tile
                         set.tiles.push(t4)
@@ -49,9 +47,13 @@ generateGameState = ->
     hand = new Hand()
     while hand.sets.length < 4
         set = findSet tiles
+        return unless set
         tiles.splice(tiles.indexOf(tile), 1) for tile in set.tiles
         hand.push set
-    hand.push findSet tiles, true
+
+    pair = findSet tiles, true
+    return unless pair
+    hand.push pair
 
     indicators = 1 + (set for set in hand.sets when set.isKan).length
     indicators += 1 while random(100) > 75 and indicators < 5

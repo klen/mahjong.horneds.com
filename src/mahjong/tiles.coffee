@@ -1,6 +1,5 @@
 flatten = require 'lodash/flatten'
 orderBy = require 'lodash/orderBy'
-random = require 'lodash/random'
 sample = require 'lodash/sample'
 some = require 'lodash/some'
 uniq = require 'lodash/uniq'
@@ -84,7 +83,7 @@ class Hand
         @push(set) for set in sets
 
     push: (set) ->
-        return unless set.isValid
+        return unless set?.isValid()
         
         @sets.push set unless set.isPair
         @pair = set if set.isPair

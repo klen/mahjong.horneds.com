@@ -5,7 +5,8 @@ scores = require './analyze/scores'
 
 
 module.exports = ->
-    game = generateGameState()
+    # generateGameState returns nothing when it cannot build a hand from the shuffled tiles
+    game = generateGameState() until game?
     game = analyze game
     game = scores game
 
