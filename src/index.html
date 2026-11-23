@@ -16,9 +16,11 @@
     <meta content="@horneds" property="twitter:creator"/>
     <meta content="https://mahjong.horneds.com" name="twitter:url"/>
     <title>Mahjong Scores Trainer by Horneds</title>
-    <script src="https://browser.sentry-cdn.com/5.1.0/bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://browser.sentry-cdn.com/5.1.0/bundle.min.js" crossorigin="anonymous" defer></script>
     <script>
-        Sentry.init({ dsn: 'https://deb458a7af5f4ba89418e44f6ff4c07c@sentry.horneds.com/7' });
+        window.addEventListener('DOMContentLoaded', function () {
+            Sentry.init({ dsn: 'https://deb458a7af5f4ba89418e44f6ff4c07c@sentry.horneds.com/7' });
+        });
     </script>
   </head>
     <style>
