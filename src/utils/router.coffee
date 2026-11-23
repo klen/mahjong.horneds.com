@@ -1,14 +1,9 @@
-{ createActions, createReducer } = require 'redux-code'
+{ createActions } = require 'redux-code'
 isPlainObject = require 'lodash/isPlainObject'
 route = require('riot-route').default
 
 
 ACTIONS = createActions 'ROUTER', { 'route', 'back', 'forward', 'go', 'routeChanged' }
-
-DEFAULT =
-    current_url: null
-    previous_url: null
-    query: null
 
 toQuery = (params) ->
     (
@@ -21,7 +16,6 @@ middleware = ({ dispatch }) ->
     route.base('#')
     route.parser (path) -> path.split('?')[0]
     route (args...) ->
-        query = route.query()
         dispatch ACTIONS.routeChanged
             url: args.join('/')
             query: route.query()
@@ -37,14 +31,5 @@ middleware = ({ dispatch }) ->
 
     return (next) -> (action) -> (ops[action.type] or next)(action)
 
-start = -> route.start(true)
 
-reducer = createReducer(DEFAULT,
-
-    [ACTIONS.TYPES.ROUTE_CHANGED]: (state, {payload: {url, query}}) ->
-        return { state..., current_url: url, previous_url: state.current_url, query }
-
-)
-
-
-module.exports = { actions, middleware, start, reducer }
+module.exports = { actions, middleware }

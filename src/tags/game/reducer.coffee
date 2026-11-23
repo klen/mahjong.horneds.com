@@ -1,4 +1,3 @@
-flatten = require 'lodash/flatten'
 { createReducer, initialReducer, commonReducer } = require 'redux-code'
 
 actions = require './actions'

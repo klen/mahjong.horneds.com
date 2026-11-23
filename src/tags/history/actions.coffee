@@ -1,4 +1,4 @@
-{ createActions, SKIP } = require 'redux-code'
+{ createActions } = require 'redux-code'
 
 selector = require './selector'
 

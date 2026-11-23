@@ -1,8 +1,6 @@
-{ createActions, SKIP } = require 'redux-code'
+{ createActions } = require 'redux-code'
 
 historyActions = require 'tags/history/actions'
-
-selector = require './selector'
 
 
 module.exports = createActions 'APP/SCORES', {

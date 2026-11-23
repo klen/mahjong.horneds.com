@@ -1,6 +1,6 @@
 random = require 'lodash/random'
 
-{ createActions, SKIP } = require 'redux-code'
+{ createActions } = require 'redux-code'
 
 generate = require 'mahjong'
 selector = require './selector'
